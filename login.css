@@ -5,6 +5,10 @@
     font-family: 'Andale Mono', monospace;
 }
 
+#logo1{
+    border-radius: 10px;
+}
+
 html, body {
     height: 100%;
 }
