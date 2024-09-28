@@ -1,3 +1,13 @@
+/**
+* style.css
+*/
+
+:root {
+    /* Constantes */
+    --logo-ratio-w: 75px;
+    --logo-ratio-h: 31px;
+}
+/* Reset básico */
 * {
     margin: 0;
     padding: 0;
@@ -5,23 +15,15 @@
     font-family: 'Andale Mono', monospace;
 }
 
-#logo1{
-    border-radius: 10px;
-}
-
-html, body {
-    height: 100%;
-}
-
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     background-color: white;
     color: rgba(0, 75, 133, 1);
 }
 
-/* Header e navegação permanecem como antes */
+#logo1{
+    border-radius: 10px;
+}
+
 header {
     background-color: rgba(0, 75, 133, 1);
     color: white;
@@ -32,17 +34,16 @@ header {
 }
 
 #logo1 {
-    width: 100px;
+    /* 901:372 ~ 900:372 = 75:31*/
+    width: 120px;
+    /* Permite o auto-ajuste da proporção => mude apenas a largura! */
+    height: calc( (width/var(--logo-ratio-w)) * --logo-ratio-h);
 }
 
 nav ul {
     list-style: none;
     display: flex;
     gap: 20px;
-}
-
-nav ul li {
-    display: inline;
 }
 
 nav ul li a {
@@ -52,77 +53,115 @@ nav ul li a {
     transition: color 0.3s;
 }
 
-nav ul li a.active {
-    font-weight: bold;
-    text-decoration: underline;
-}
-
 nav ul li a:hover {
     color: rgba(255, 255, 255, 0.8);
 }
 
-/* Conteúdo principal */
-.sports-section {
-    text-align: center;
-    padding: 50px 20px;
-    background-color: rgba(0, 75, 133, 0.1);
-    flex-grow: 1; /* Faz o conteúdo crescer e preencher o espaço disponível */
-}
-
-.sports-section h2 {
-    font-size: 36px;
-    color: rgba(0, 75, 133, 1);
-    margin-bottom: 40px;
-}
-
-.sports-grid {
-    display: flex;
-    flex-direction: row; /* Exibe os esportes na horizontal */
-    flex-wrap: wrap; /* Permite que os cartões se movam para a linha seguinte se não houver espaço suficiente */
-    justify-content: center; /* Centraliza os cartões horizontalmente */
-    gap: 30px; /* Espaçamento entre os cartões de esportes */
-}
-
-.sport-card {
+.login-btn {
     background-color: white;
-    border: 1px solid rgba(0, 75, 133, 0.2);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 75, 133, 0.2);
-    padding: 30px; /* Aumenta o padding para mais espaço interno */
-    width: 300px; /* Aumenta a largura dos cartões */
-    text-align: center;
-    transition: transform 0.3s;
+    color: rgba(0, 75, 133, 1);
+    padding: 5px 15px;
+    border-radius: 5px;
 }
 
-.sport-card img {
-    width: 100%;
-    border-radius: 10px;
+.login-btn:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.hero {
+    background-color: rgba(0, 75, 133, 1);
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero h2 {
+    font-size: 48px;
     margin-bottom: 20px;
 }
 
-.sport-card h3 {
+.hero p {
     font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.cta-btn {
+    background-color: white;
+    color: rgba(0, 75, 133, 1);
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 18px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.cta-btn:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    padding: 50px 20px;
+    background-color: white;
+    flex-wrap: wrap;
+}
+
+.feature {
+    text-align: center;
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+.feature h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
     color: rgba(0, 75, 133, 1);
 }
 
-.sport-card:hover {
-    transform: scale(1.05);
+.feature p {
+    font-size: 18px;
+    color: rgba(0, 75, 133, 0.8);
 }
 
-/* Footer */
 footer {
     background-color: rgba(0, 75, 133, 1);
     color: white;
     text-align: center;
     padding: 20px 0;
-    width: 100%;
 }
 
 footer p {
     font-size: 16px;
 }
 
-/* Media Queries para responsividade */
+/* Garante que o body ocupe toda a altura da página */
+html, body {
+    height: 100%;
+}
+
+/* O contêiner principal da página deve ocupar o espaço disponível */
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* O conteúdo principal da página irá ocupar o espaço restante */
+main {
+    flex: 1;
+}
+
+/* O footer fica "grudado" no final da página */
+footer {
+    background-color: rgba(0, 75, 133, 1);
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: auto; /* Empurra o footer para o final */
+}
+
+/* Media Queries para Mobile */
+
 @media (max-width: 768px) {
     header {
         flex-direction: column;
@@ -137,7 +176,8 @@ footer p {
     }
 
     #logo1 {
-        width: 80px;
+        width: var(--logo-ratio-w)px;
+        height: var(--logo-ratio-h);
     }
 
     nav {
@@ -172,9 +212,7 @@ footer p {
     }
 
     .sports-grid {
-        flex-direction: column; /* Exibe os esportes na vertical */
-        align-items: center; /* Centraliza os itens horizontalmente */
-        gap: 20px; /* Ajusta o espaçamento entre os cartões de esportes */
+        gap: 20px;
     }
 
     .sport-card {
@@ -192,10 +230,6 @@ footer p {
         padding: 10px;
     }
 
-    #logo1 {
-        width: 80px;
-    }
-
     nav ul {
         gap: 15px; /* Aumenta o espaçamento entre os itens da navbar para telas menores */
     }
@@ -209,7 +243,7 @@ footer p {
     }
 
     .sports-grid {
-        gap: 15px; /* Ajusta o espaçamento entre os cartões de esportes para telas menores */
+        gap: 15px;
     }
 
     .sport-card {

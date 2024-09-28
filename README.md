@@ -10,3 +10,9 @@ Este projeto foi desenvolvido com o fito de praticar habilidades relacionadas ao
 
 ## Créditos
 - <a href="https://github.com/MatheusFVieira" target="_blank">Matheus Freitas Vieira</a>;
+
+
+### To-do
+- [ ] Visualizador de senha (JS-DOM);
+- [ ] Parsear string do username e da senha (evitar SQL Injection);
+- [ ] login.php + db;
