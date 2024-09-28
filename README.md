@@ -9,7 +9,8 @@ Este projeto foi desenvolvido com o fito de praticar habilidades relacionadas ao
 ## Modelagem
 
 ## Créditos
-- <a href="https://github.com/MatheusFVieira" target="_blank">Matheus Freitas Vieira</a>;
+- [Matheus Freitas](https://github.com/MatheusFVieira);
+- [Pedro Henrique](https://github.com/DevWannabe-dot).
 
 
 ### To-do
