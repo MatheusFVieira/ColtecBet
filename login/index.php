@@ -4,25 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Coltec.BET</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
     <header>
         <div class="logo">
-            <a href="../index.html"><img src="../Assets/logo1.jpg" id="logo1"></a>
+            <a href="/index.html"><img src="/Assets/logo1.jpg" id="logo1"></a>
         </div>
         <nav>
             <ul>
-                <li><a href="../index.html">Home</a></li>
+                <li><a href="/index.html">Home</a></li>
                 <li><a href="#">Apostas</a></li>
-                <li><a href="../esportes/index.html">Esportes</a></li>
-                <li><a href="../suporte/index.html">Suporte</a></li>
+                <li><a href="/esportes/index.html">Esportes</a></li>
+                <li><a href="/suporte/index.html">Suporte</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
+    
         <div class="main-content">
             <section class="login-section">
                 <div class="login-box">
@@ -43,9 +43,9 @@
                     <p>Não tem uma conta? <a href="#">Cadastre-se</a></p>
                 </div>
             </section>
+            <?php require 'login.php'?>
         </div>
-        <?php require 'login.php'?>
-    </main>
+        
 
     <footer>
         <p>&copy; 2024 Coltec.BET. Todos os direitos reservados.</p>

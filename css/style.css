@@ -46,6 +46,10 @@ nav ul {
     gap: 20px;
 }
 
+nav ul li {
+    display: inline;
+}
+
 nav ul li a {
     color: white;
     text-decoration: none;
@@ -53,8 +57,9 @@ nav ul li a {
     transition: color 0.3s;
 }
 
-nav ul li a:hover {
-    color: rgba(255, 255, 255, 0.8);
+nav ul li a.active {
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .login-btn {
@@ -66,6 +71,7 @@ nav ul li a:hover {
 
 .login-btn:hover {
     background-color: rgba(255, 255, 255, 0.9);
+    font-weight: bold;
 }
 
 .hero {
@@ -97,6 +103,7 @@ nav ul li a:hover {
 
 .cta-btn:hover {
     background-color: rgba(255, 255, 255, 0.9);
+    font-weight: bold;
 }
 
 .features {
@@ -124,17 +131,6 @@ nav ul li a:hover {
     color: rgba(0, 75, 133, 0.8);
 }
 
-footer {
-    background-color: rgba(0, 75, 133, 1);
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-}
-
-footer p {
-    font-size: 16px;
-}
-
 /* Garante que o body ocupe toda a altura da página */
 html, body {
     height: 100%;
@@ -158,6 +154,10 @@ footer {
     text-align: center;
     padding: 20px 0;
     margin-top: auto; /* Empurra o footer para o final */
+}
+
+footer p {
+    font-size: 16px;
 }
 
 /* Media Queries para Mobile */
@@ -199,29 +199,7 @@ footer {
     }
 
     nav .login-container {
-        display: none; /* Esconde o container de login se não estiver usando */
-    }
-
-    .sports-section {
-        padding: 30px 15px;
-    }
-
-    .sports-section h2 {
-        font-size: 28px;
-        margin-bottom: 20px;
-    }
-
-    .sports-grid {
-        gap: 20px;
-    }
-
-    .sport-card {
-        width: 250px;
-        padding: 25px;
-    }
-
-    .sport-card h3 {
-        font-size: 20px;
+        display: none; /* Esconde o container de login se não o estiver usando */
     }
 }
 
@@ -232,27 +210,6 @@ footer {
 
     nav ul {
         gap: 15px; /* Aumenta o espaçamento entre os itens da navbar para telas menores */
-    }
-
-    .sports-section {
-        padding: 20px 10px;
-    }
-
-    .sports-section h2 {
-        font-size: 24px;
-    }
-
-    .sports-grid {
-        gap: 15px;
-    }
-
-    .sport-card {
-        width: 200px;
-        padding: 20px;
-    }
-
-    .sport-card h3 {
-        font-size: 18px;
     }
 
     footer p {
