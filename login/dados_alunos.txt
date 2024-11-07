@@ -1,6 +1,0 @@
-bagos|bagos
-bagos|bagos
-bagos|bag
-bagos|bag
-pedro|p106
-Login|Attempt

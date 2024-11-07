@@ -1,13 +1,3 @@
-/**
-* style.css
-*/
-
-:root {
-    /* Constantes */
-    --logo-ratio-w: 75px;
-    --logo-ratio-h: 31px;
-}
-/* Reset básico */
 * {
     margin: 0;
     padding: 0;
@@ -20,10 +10,6 @@ body {
     color: rgba(0, 75, 133, 1);
 }
 
-#logo1{
-    border-radius: 10px;
-}
-
 header {
     background-color: rgba(0, 75, 133, 1);
     color: white;
@@ -34,20 +20,14 @@ header {
 }
 
 #logo1 {
-    /* 901:372 ~ 900:372 = 75:31*/
-    width: 120px;
-    /* Permite o auto-ajuste da proporção => mude apenas a largura! */
-    height: calc( (width/var(--logo-ratio-w)) * --logo-ratio-h);
+    width: 100px;
+    border-radius: 15px;
 }
 
 nav ul {
     list-style: none;
     display: flex;
     gap: 20px;
-}
-
-nav ul li {
-    display: inline;
 }
 
 nav ul li a {
@@ -57,9 +37,8 @@ nav ul li a {
     transition: color 0.3s;
 }
 
-nav ul li a.active {
-    font-weight: bold;
-    text-decoration: underline;
+nav ul li a:hover {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .login-btn {
@@ -71,7 +50,6 @@ nav ul li a.active {
 
 .login-btn:hover {
     background-color: rgba(255, 255, 255, 0.9);
-    font-weight: bold;
 }
 
 .hero {
@@ -103,7 +81,6 @@ nav ul li a.active {
 
 .cta-btn:hover {
     background-color: rgba(255, 255, 255, 0.9);
-    font-weight: bold;
 }
 
 .features {
@@ -131,6 +108,17 @@ nav ul li a.active {
     color: rgba(0, 75, 133, 0.8);
 }
 
+footer {
+    background-color: rgba(0, 75, 133, 1);
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+footer p {
+    font-size: 16px;
+}
+
 /* Garante que o body ocupe toda a altura da página */
 html, body {
     height: 100%;
@@ -156,10 +144,6 @@ footer {
     margin-top: auto; /* Empurra o footer para o final */
 }
 
-footer p {
-    font-size: 16px;
-}
-
 /* Media Queries para Mobile */
 
 @media (max-width: 768px) {
@@ -176,8 +160,7 @@ footer p {
     }
 
     #logo1 {
-        width: var(--logo-ratio-w)px;
-        height: var(--logo-ratio-h);
+        width: 80px;
     }
 
     nav {
@@ -199,7 +182,29 @@ footer p {
     }
 
     nav .login-container {
-        display: none; /* Esconde o container de login se não o estiver usando */
+        display: none; /* Esconde o container de login se não estiver usando */
+    }
+
+    .sports-section {
+        padding: 30px 15px;
+    }
+
+    .sports-section h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .sports-grid {
+        gap: 20px;
+    }
+
+    .sport-card {
+        width: 250px;
+        padding: 25px;
+    }
+
+    .sport-card h3 {
+        font-size: 20px;
     }
 }
 
@@ -208,8 +213,33 @@ footer p {
         padding: 10px;
     }
 
+    #logo1 {
+        width: 80px;
+    }
+
     nav ul {
         gap: 15px; /* Aumenta o espaçamento entre os itens da navbar para telas menores */
+    }
+
+    .sports-section {
+        padding: 20px 10px;
+    }
+
+    .sports-section h2 {
+        font-size: 24px;
+    }
+
+    .sports-grid {
+        gap: 15px;
+    }
+
+    .sport-card {
+        width: 200px;
+        padding: 20px;
+    }
+
+    .sport-card h3 {
+        font-size: 18px;
     }
 
     footer p {

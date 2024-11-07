@@ -1,6 +1,7 @@
-/**
-* volei.css
-*/
+#logo1 {
+    width: 100px;
+    border-radius: 15px;
+}
 
 body {
     display: flex;
