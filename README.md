@@ -4,10 +4,9 @@ Este projeto foi desenvolvido com o fito de praticar habilidades relacionadas ao
 
 **Aviso legal:** Este projeto não incentiva nem promove apostas de qualquer maneira. Recomendamos que, em um ambiente real, os usuários tenham cautela ao participar de atividades de apostas esportivas, apostando apenas valores que possam perder. Para mais informações, consulte [Aposta esportiva não é investimento: entenda o porquê](https://investalk.bb.com.br/noticias/quero-aprender/aposta-esportiva-nao-e-investimento-entenda-por-que).
 
-## Estrutura do projeto
+## 🚀 Tecnologias Utilizadas
 
-## Modelagem
-
+PHP HTML CSS
 ## Créditos
 - [Matheus Freitas](https://github.com/MatheusFVieira);
 - [Pedro Henrique](https://github.com/DevWannabe-dot).
