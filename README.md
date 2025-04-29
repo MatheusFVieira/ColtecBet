@@ -18,7 +18,7 @@
 ## 🌐 Acesse o Projeto
 
 Você pode visualizar a aplicação funcionando através do GitHub Pages:  
-🔗 **[coltec-bet.github.io](https://matheusfvieira.github.io/coltec-bet/)**
+🔗 **[coltec-bet.github.io](https://matheusfvieira.github.io/ColtecBet/)**
 
 ---
 
