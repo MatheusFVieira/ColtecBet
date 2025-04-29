@@ -1,21 +1,47 @@
-# <p align="center">Coltec.BET</p>
+# <p align="center">🎯 Coltec.BET</p>
 
-Este projeto foi desenvolvido com o fito de praticar habilidades relacionadas ao desenvolvimento web, abrangendo tanto competências de *front* quanto de *back-end*. Ressaltamos que o projeto **não tem qualquer associação com apostas esportivas** e é de caráter estritamente **educacional e recreativo**, sem circulação de quantias.
+<p align="center"><em>Projeto web educacional para prática de desenvolvimento full stack</em></p>
 
-**Aviso legal:** Este projeto não incentiva nem promove apostas de qualquer maneira. Recomendamos que, em um ambiente real, os usuários tenham cautela ao participar de atividades de apostas esportivas, apostando apenas valores que possam perder. Para mais informações, consulte [Aposta esportiva não é investimento: entenda o porquê](https://investalk.bb.com.br/noticias/quero-aprender/aposta-esportiva-nao-e-investimento-entenda-por-que).
+---
+
+## 📚 Sobre o Projeto
+
+**Coltec.BET** foi desenvolvido com o objetivo de exercitar habilidades em desenvolvimento web, abrangendo tanto o **front-end** quanto o **back-end**.  
+
+> ⚠️ **Aviso Legal:** Este projeto não possui qualquer vínculo com casas de apostas reais e é de caráter **estritamente educacional e recreativo**, sem envolvimento de valores monetários.  
+>  
+> Este sistema **não promove nem incentiva apostas esportivas**. Recomendamos cautela em ambientes reais e o uso responsável dessas plataformas. Para entender mais sobre os riscos, leia:  
+> 👉 [Aposta esportiva não é investimento: entenda o porquê](https://investalk.bb.com.br/noticias/quero-aprender/aposta-esportiva-nao-e-investimento-entenda-por-que).
+
+---
+
+## 🌐 Acesse o Projeto
+
+Você pode visualizar a aplicação funcionando através do GitHub Pages:  
+🔗 **[coltec-bet.github.io](https://matheusfvieira.github.io/coltec-bet/)**
+
+---
 
 ## 🚀 Tecnologias Utilizadas
 
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" height="40" alt="php logo" /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="40" alt="html5 logo" />
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="40" alt="css3 logo" />
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" height="40" alt="mysql logo" />
+<div style="display: flex; gap: 10px; align-items: center;">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" height="40" alt="PHP" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="40" alt="HTML5" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="40" alt="CSS3" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" height="40" alt="MySQL" />
+</div>
 
-## Créditos
-- [Matheus Freitas](https://github.com/MatheusFVieira);
-- [Pedro Henrique](https://github.com/DevWannabe-dot).
+---
 
+## 👨‍💻 Desenvolvedores
 
-### To-do
-- [ ] Visualizador de senha (JS-DOM);
-- [ ] Parsear string do username e da senha (evitar SQL Injection);
-- [ ] login.php + db;
+- [Matheus Freitas](https://github.com/MatheusFVieira)  
+- [Pedro Henrique](https://github.com/DevWannabe-dot)
+
+---
+
+## 📌 To-Do
+
+- [ ] Adicionar visualizador de senha (JS + DOM)
+- [ ] Sanitizar entradas de usuário (username e senha) para evitar SQL Injection
+- [ ] Integrar `login.php` com banco de dados
