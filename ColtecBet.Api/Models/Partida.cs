@@ -1,8 +1,10 @@
+namespace ColtecBet.Api.Models;
+
 public class Partida
 {
     public int Id { get; set; }
-    public string TimeCasa { get; set; }
-    public string TimeVisitante { get; set; }
+    public string? TimeCasa { get; set; }
+    public string? TimeVisitante { get; set; }
     public DateTime DataPartida { get; set; }
     public decimal OddCasa { get; set; }
     public decimal OddEmpate { get; set; }

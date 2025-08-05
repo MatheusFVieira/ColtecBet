@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "10iogGQkVxoR3hRbG6obkRgk+KilK/SNdblG9aIl8qQ=",
+  "Source": "ColtecBet.Api",
+  "BasePath": "_content/ColtecBet.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
