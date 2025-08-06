@@ -5,15 +5,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.OpenApi.Models; // Necessário para a configuração do Swagger
 
-// --- 1. Definições Iniciais ---
+// --- SEÇÃO DE CONFIGURAÇÃO INICIAL ---
+
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
+// --- SEÇÃO DE REGISTRO DE SERVIÇOS ---
 
-// --- 2. Registro dos Serviços no Container ---
-
-// Adiciona o serviço de CORS
+// 1. Configuração do CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -25,7 +26,10 @@ builder.Services.AddCors(options =>
                       });
 });
 
-// Adiciona o serviço de Autenticação com JWT
+// 2. Configuração do HttpClientFactory
+builder.Services.AddHttpClient();
+
+// 3. Configuração da Autenticação JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -41,30 +45,55 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Novo: Adiciona o serviço para fazer requisições HTTP de forma otimizada
-builder.Services.AddHttpClient();
-
-// Adiciona os serviços para os Controllers da API
+// 4. Adiciona o serviço de Controllers
 builder.Services.AddControllers();
 
-// Adiciona o serviço do Entity Framework Core para o SQLite
+// 5. Configuração do Banco de Dados (DbContext)
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-// Adiciona os serviços do Swagger para documentação
+// 6. Configuração do Swagger com suporte para Autenticação
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    // Adiciona a definição de segurança para o Bearer Token (JWT)
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Insira 'Bearer' [espaço] e então o seu token no campo abaixo.\r\n\r\nExemplo: \"Bearer 12345abcdef\""
+    });
+
+    // Adiciona o requisito de segurança que usa a definição acima
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
 
 
-// --- 3. Build da Aplicação ---
+// --- SEÇÃO DE BUILD DA APLICAÇÃO ---
+
 var app = builder.Build();
 
+// --- SEÇÃO DE CONFIGURAÇÃO DO PIPELINE HTTP ---
 
-// --- 4. Configuração do Pipeline de Requisições HTTP ---
-
-// Configure o pipeline de requisições HTTP.
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -73,16 +102,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// A ordem destes é importante!
 app.UseCors(MyAllowSpecificOrigins);
 
-app.UseAuthentication(); // <-- Garante que a aplicação entenda quem está fazendo a requisição
-
-app.UseAuthorization(); // <-- Garante que a pessoa tem permissão para acessar o recurso
-
+// A ordem é importante: Autenticação DEVE vir ANTES de Autorização.
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
-
-// --- 5. Execução da Aplicação ---
 app.Run();

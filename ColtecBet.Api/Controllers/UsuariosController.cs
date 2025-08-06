@@ -62,7 +62,7 @@ namespace ColtecBet.Api.Controllers
             return Ok(new { Token = token });
         }
         
-        // Método privado para gerar o Token JWT com as correções
+        // Método privado para gerar o Token JWT
         private string GenerateJwtToken(Usuario user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -72,8 +72,14 @@ namespace ColtecBet.Api.Controllers
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Name, user.Nome!),
-                new Claim("saldo", user.Saldo.ToString()) // <-- ADICIONE ESTA LINHA
+                new Claim("saldo", user.Saldo.ToString())
             };
+
+            // Se o usuário for um administrador, adicionamos uma "role" (papel) de Admin ao token.
+            if (user.IsAdmin)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+            }
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
