@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ColtecBet.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250805194003_InitialCreate")]
+    [Migration("20250806150208_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,16 +27,12 @@ namespace ColtecBet.Api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Escolha")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("IdPartida")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("IdUsuario")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PartidaId")
+                    b.Property<int?>("PartidaId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Status")
@@ -86,11 +82,9 @@ namespace ColtecBet.Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TimeCasa")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TimeVisitante")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -105,18 +99,15 @@ namespace ColtecBet.Api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Saldo")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("SenhaHash")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -128,9 +119,7 @@ namespace ColtecBet.Api.Migrations
                 {
                     b.HasOne("ColtecBet.Api.Models.Partida", "Partida")
                         .WithMany()
-                        .HasForeignKey("PartidaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PartidaId");
 
                     b.HasOne("ColtecBet.Api.Models.Usuario", "Usuario")
                         .WithMany()

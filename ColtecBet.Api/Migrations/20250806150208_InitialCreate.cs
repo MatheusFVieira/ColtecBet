@@ -17,8 +17,8 @@ namespace ColtecBet.Api.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    TimeCasa = table.Column<string>(type: "TEXT", nullable: false),
-                    TimeVisitante = table.Column<string>(type: "TEXT", nullable: false),
+                    TimeCasa = table.Column<string>(type: "TEXT", nullable: true),
+                    TimeVisitante = table.Column<string>(type: "TEXT", nullable: true),
                     DataPartida = table.Column<DateTime>(type: "TEXT", nullable: false),
                     OddCasa = table.Column<decimal>(type: "TEXT", nullable: false),
                     OddEmpate = table.Column<decimal>(type: "TEXT", nullable: false),
@@ -37,9 +37,9 @@ namespace ColtecBet.Api.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: false),
-                    SenhaHash = table.Column<string>(type: "TEXT", nullable: false),
+                    Nome = table.Column<string>(type: "TEXT", nullable: true),
+                    Email = table.Column<string>(type: "TEXT", nullable: true),
+                    SenhaHash = table.Column<string>(type: "TEXT", nullable: true),
                     Saldo = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -53,14 +53,13 @@ namespace ColtecBet.Api.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    IdUsuario = table.Column<int>(type: "INTEGER", nullable: false),
+                    UsuarioId = table.Column<int>(type: "INTEGER", nullable: false),
                     IdPartida = table.Column<int>(type: "INTEGER", nullable: false),
-                    Escolha = table.Column<string>(type: "TEXT", nullable: false),
+                    Escolha = table.Column<string>(type: "TEXT", nullable: true),
                     Valor = table.Column<decimal>(type: "TEXT", nullable: false),
                     Status = table.Column<string>(type: "TEXT", nullable: false),
                     ValorRetorno = table.Column<decimal>(type: "TEXT", nullable: false),
-                    UsuarioId = table.Column<int>(type: "INTEGER", nullable: false),
-                    PartidaId = table.Column<int>(type: "INTEGER", nullable: false)
+                    PartidaId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -69,8 +68,7 @@ namespace ColtecBet.Api.Migrations
                         name: "FK_Apostas_Partidas_PartidaId",
                         column: x => x.PartidaId,
                         principalTable: "Partidas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Apostas_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,

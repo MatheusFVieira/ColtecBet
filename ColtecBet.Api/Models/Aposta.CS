@@ -1,9 +1,10 @@
+// Em Models/Aposta.cs
 namespace ColtecBet.Api.Models;
 
 public class Aposta
 {
     public int Id { get; set; }
-    public int IdUsuario { get; set; }
+    public int UsuarioId { get; set; } // O nome DEVE ser UsuarioId
     public int IdPartida { get; set; }
     public string? Escolha { get; set; }
     public decimal Valor { get; set; }
