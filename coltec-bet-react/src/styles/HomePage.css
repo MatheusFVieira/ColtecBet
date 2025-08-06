@@ -1,0 +1,30 @@
+/* Dentro de src/styles/HomePage.css */
+.hero {
+    background-color: rgba(0, 75, 133, 1);
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+    /* Adicione esta linha para ajudar no layout flex */
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.hero h2 { font-size: 48px; margin-bottom: 20px; }
+.hero p { font-size: 24px; margin-bottom: 30px; }
+.cta-btn {
+    background-color: white;
+    color: rgba(0, 75, 133, 1);
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 18px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.cta-btn:hover { background-color: rgba(255, 255, 255, 0.9); }
+.features { display: flex; justify-content: space-around; padding: 50px 20px; background-color: white; flex-wrap: wrap; }
+.feature { text-align: center; max-width: 300px; margin-bottom: 20px; }
+.feature h3 { font-size: 24px; margin-bottom: 10px; color: rgba(0, 75, 133, 1); }
+.feature p { font-size: 18px; color: rgba(0, 75, 133, 0.8); }

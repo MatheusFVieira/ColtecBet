@@ -1,0 +1,42 @@
+/* Dentro de src/styles/pages/SuportePage.css */
+
+.support-section {
+    text-align: center;
+    padding: 50px 20px;
+    flex-grow: 1;
+    background-color: rgba(0, 75, 133, 0.1);
+}
+
+.support-section h2 {
+    font-size: 36px;
+    color: rgba(0, 75, 133, 1);
+    margin-bottom: 20px;
+}
+
+.support-section p {
+    font-size: 18px;
+    color: rgba(0, 75, 133, 0.9);
+    margin-bottom: 20px;
+}
+
+.email-section {
+    margin: 20px 0;
+}
+
+.email-link {
+    font-size: 20px;
+    color: rgba(0, 75, 133, 1);
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid rgba(0, 75, 133, 1);
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.email-link:hover {
+    background-color: rgba(0, 75, 133, 1);
+    color: white;
+}
+
+/* Adicione as Media Queries do seu arquivo original aqui se desejar */

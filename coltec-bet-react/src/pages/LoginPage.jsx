@@ -2,33 +2,29 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext'; // Importamos nosso hook
+import { useAuth } from '../context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom'; // Importa o Navigate
+import '../styles/LoginPage.css';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  
-  // Usamos a função de login do nosso contexto!
-  const { login } = useAuth(); 
+
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     setMessage('');
-    
-    // Lembre-se de usar a porta correta do seu backend (http, não https)
-    const apiUrl = 'http://localhost:5177/api/usuarios/login';
 
     try {
-      const response = await axios.post(apiUrl, { email, senha });
-      
-      // Apenas chamamos a função de login do contexto!
+      const response = await axios.post('http://localhost:5177/api/usuarios/login', { email, senha });
       login(response.data.token);
-
-      setMessage('Login realizado com sucesso! Bem-vindo!');
-
+      // Após o login, redireciona para a página de apostas
+      navigate('/apostas'); 
     } catch (error) {
       setMessage(error.response?.data?.message || 'Erro ao conectar.');
     } finally {
@@ -36,36 +32,45 @@ function LoginPage() {
     }
   };
 
-  // --- PARTE IMPORTANTE: O CÓDIGO DO FORMULÁRIO ---
-  // Certifique-se de que toda esta seção 'return' está presente.
   return (
-    <div>
-      <h2>Página de Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+    <section className="login-section">
+        <div className="login-box">
+            <h2>Login na Coltec.BET</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="input-box">
+                    <label htmlFor="email">Email</label>
+                    <input 
+                      type="email" 
+                      id="email" 
+                      name="email" 
+                      placeholder="Digite seu email" 
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required 
+                    />
+                </div>
+                <div className="input-box">
+                    <label htmlFor="password">Senha</label>
+                    <input 
+                      type="password" 
+                      id="password" 
+                      name="password" 
+                      placeholder="Digite sua senha" 
+                      value={senha}
+                      onChange={(e) => setSenha(e.target.value)}
+                      required 
+                    />
+                </div>
+                <div className="input-box">
+                    <button type="submit" className="login-btn-form" disabled={isLoading}>
+                      {isLoading ? 'Entrando...' : 'Entrar'}
+                    </button>
+                </div>
+            </form>
+            {message && <p style={{color: 'red', marginTop: '10px'}}>{message}</p>}
+            <p>Não tem uma conta? <Link to="/registrar">Cadastre-se</Link></p>
         </div>
-        <div>
-          <label>Senha:</label>
-          <input
-            type="password"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Entrando...' : 'Entrar'}
-        </button>
-      </form>
-      {message && <p>{message}</p>}
-    </div>
+    </section>
   );
 }
 

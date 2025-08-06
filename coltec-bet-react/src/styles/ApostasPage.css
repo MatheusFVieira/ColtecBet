@@ -1,0 +1,53 @@
+/* Dentro de src/styles/ApostasPage.css */
+
+.partidas-container {
+    padding: 20px;
+}
+
+.partida-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 15px auto;
+    border-radius: 8px;
+    max-width: 600px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.partida-card h3 {
+    text-align: center;
+    margin: 0;
+    font-size: 1.5em;
+    color: rgba(0, 75, 133, 1);
+}
+
+.partida-card p {
+    text-align: center;
+    margin: 10px 0;
+    color: #555;
+}
+
+.odds-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.odds-container strong {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.odds-container button {
+    background-color: rgba(0, 75, 133, 1);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.odds-container button:hover {
+    background-color: rgba(0, 55, 100, 1);
+}

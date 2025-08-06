@@ -1,0 +1,71 @@
+/* Caminho: src/styles/Layout.css */
+header {
+    background-color: rgba(0, 75, 133, 1);
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logo1 {
+    width: 100px;
+    border-radius: 15px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.login-btn {
+    background-color: white;
+    color: rgba(0, 75, 133, 1) !important;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+.login-btn:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.logout-btn {
+    background: none;
+    border: 1px solid white;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: 'Andale Mono', monospace;
+}
+
+main {
+    flex: 1; /* Faz o conteúdo principal ocupar o espaço restante */
+}
+
+footer {
+    background-color: rgba(0, 75, 133, 1);
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: auto; /* Empurra o footer para o final */
+}
+
+.user-info span {
+    color: white;
+    font-size: 16px;
+}

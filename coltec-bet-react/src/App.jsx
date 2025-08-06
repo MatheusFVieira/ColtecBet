@@ -1,58 +1,44 @@
-// Dentro de src/App.jsx
+// Caminho: src/App.jsx
 
 import React from 'react';
-import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+// Importando todos os nossos componentes de página e estrutura
+import Layout from './components/Layout';
+import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
-import HomePage from './pages/HomePage';
-import AdminPage from './pages/AdminPage'; // Importamos a AdminPage
+import ApostasPage from './pages/ApostasPage';
+import AdminPage from './pages/AdminPage';
+import SuportePage from './pages/SuportePage';
 import ProtectedRoute from './components/ProtectedRoute';
-import AdminRoute from './components/AdminRoute'; // Importamos a AdminRoute
-import { useAuth } from './context/AuthContext';
+import AdminRoute from './components/AdminRoute';
 
 function App() {
-  const { user, logout } = useAuth();
-
   return (
     <BrowserRouter>
-      <div className="App">
-        <header>
-          <h1>Bem-vindo ao Coltec.BET</h1>
-          <nav>
-            {user ? (
-              <>
-                <span>Olá, {user.name}! (Saldo: R$ {parseFloat(user.saldo).toFixed(2)})</span>
-                | <Link to="/">Home</Link>
-                {/* O link para o painel de admin só aparece se o usuário for admin */}
-                {user.role === 'Admin' && <> | <Link to="/admin">Admin</Link></>}
-                | <button onClick={logout}>Sair</button>
-              </>
-            ) : (
-              <>
-                <Link to="/registrar">Registrar</Link> | <Link to="/login">Login</Link>
-              </>
-            )}
-          </nav>
-        </header>
-        <hr />
-        <main>
-          <Routes>
-            {/* Rotas Públicas */}
-            <Route path="/registrar" element={<RegisterPage />} />
-            <Route path="/login" element={user ? <Navigate to="/" /> : <LoginPage />} />
+      <Routes>
+        {/* A rota principal "/" renderiza o Layout, e todas as outras rotas são "filhas" dela */}
+        <Route path="/" element={<Layout />}>
 
-            {/* Rotas Protegidas para Usuários Normais */}
-            <Route path="/" element={<ProtectedRoute />}>
-              <Route index element={<HomePage />} />
-            </Route>
-            
-            {/* Rota Protegida exclusiva para Administradores */}
-            <Route path="/admin" element={<AdminRoute />}>
-              <Route index element={<AdminPage />} />
-            </Route>
-          </Routes>
-        </main>
-      </div>
+          {/* Páginas Públicas */}
+          <Route index element={<HomePage />} /> {/* 'index' significa que esta é a página padrão para "/" */}
+          <Route path="registrar" element={<RegisterPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="suporte" element={<SuportePage />} />
+
+          {/* Rotas Protegidas para Usuários Logados */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="apostas" element={<ApostasPage />} />
+          </Route>
+          
+          {/* Rotas Protegidas para Administradores */}
+          <Route element={<AdminRoute />}>
+            <Route path="admin" element={<AdminPage />} />
+          </Route>
+
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }

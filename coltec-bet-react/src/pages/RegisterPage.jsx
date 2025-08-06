@@ -1,89 +1,91 @@
 // Dentro de src/pages/RegisterPage.jsx
 
 import React, { useState } from 'react';
-import axios from 'axios'; // Importamos o axios
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+// Usaremos o mesmo CSS da página de login para manter a consistência
+import '../styles/LoginPage.css'; 
 
 function RegisterPage() {
-  // Estados para armazenar os dados do formulário
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const [message, setMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
-  // Estado para armazenar mensagens de sucesso ou erro
-  const [message, setMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setIsLoading(true);
+        setMessage('');
 
-  // Função chamada quando o formulário é enviado
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Impede o recarregamento da página
-    setIsLoading(true);
-    setMessage('');
+        try {
+            await axios.post('http://localhost:5177/api/usuarios/registrar', {
+                nome,
+                email,
+                senha
+            });
 
-    // IMPORTANTE: Substitua o número da porta (7123) pelo que aparece no seu terminal do backend!
-    const apiUrl = 'http://localhost:5177/api/usuarios/registrar';
+            // Após o sucesso, avisa o usuário e o redireciona para o login
+            alert('Registro realizado com sucesso! Por favor, faça o login.');
+            navigate('/login');
 
-    try {
-      // Faz a requisição POST para a API usando axios
-      const response = await axios.post(apiUrl, {
-        nome: nome,
-        email: email,
-        senha: senha,
-      });
+        } catch (error) {
+            setMessage(error.response?.data || 'Ocorreu um erro durante o registro.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
-      // Se a requisição for bem-sucedida, mostra a mensagem de sucesso
-      setMessage(response.data.message);
-
-    } catch (error) {
-      // Se ocorrer um erro, pega a mensagem de erro da API e a exibe
-      if (error.response && error.response.data) {
-        setMessage(error.response.data);
-      } else {
-        setMessage('Ocorreu um erro ao tentar se conectar com o servidor.');
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <div>
-      <h2>Página de Registro</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nome:</label>
-          <input
-            type="text"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Senha:</label>
-          <input
-            type="password"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Registrando...' : 'Registrar'}
-        </button>
-      </form>
-      {/* Exibe a mensagem de sucesso ou erro */}
-      {message && <p>{message}</p>}
-    </div>
-  );
+    return (
+        <section className="login-section">
+            <div className="login-box">
+                <h2>Crie sua Conta</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="input-box">
+                        <label htmlFor="nome">Nome</label>
+                        <input
+                            type="text"
+                            id="nome"
+                            placeholder="Digite seu nome completo"
+                            value={nome}
+                            onChange={(e) => setNome(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="input-box">
+                        <label htmlFor="email">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Digite seu melhor email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="input-box">
+                        <label htmlFor="password">Senha</label>
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Crie uma senha segura"
+                            value={senha}
+                            onChange={(e) => setSenha(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="input-box">
+                        <button type="submit" className="login-btn-form" disabled={isLoading}>
+                            {isLoading ? 'Registrando...' : 'Registrar'}
+                        </button>
+                    </div>
+                </form>
+                {message && <p style={{ color: 'red', marginTop: '10px' }}>{message}</p>}
+                <p>Já tem uma conta? <Link to="/login">Faça o login</Link></p>
+            </div>
+        </section>
+    );
 }
 
 export default RegisterPage;
