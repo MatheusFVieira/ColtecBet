@@ -121,9 +121,21 @@ app.UseSwaggerUI();
 
 app.UseCors(MyAllowSpecificOrigins);
 
+app.Use(async (context, next) =>
+{
+    if (context.Request.Method == "OPTIONS")
+    {
+        context.Response.StatusCode = 200;
+        return;
+    }
+
+    await next();
+});
+
 // A ordem é importante: Autenticação ANTES de Autorização
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllers();
 
