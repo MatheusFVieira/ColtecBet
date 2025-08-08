@@ -8,8 +8,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copia o arquivo .csproj e faz restore
-COPY ["ColtecBet.Api/ColtecBet.Api.csproj", "ColtecBet.Api/"]
-RUN dotnet restore "ColtecBet.Api/ColtecBet.Api.csproj"
+COPY ["ColtecBet.Api.csproj", "ColtecBet.Api/"]
+RUN dotnet restore "ColtecBet.Api.csproj"
 
 # Copia todo o restante do código
 COPY . .
