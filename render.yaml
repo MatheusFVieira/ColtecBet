@@ -1,9 +1,19 @@
 services:
   - type: web
     name: coltec-bet-api
-    env: docker    # 👈 ESSENCIAL: diz que esse serviço é baseado em Docker
-    dockerfilePath: Dockerfile
-    plan: free     # ou starter, dependendo do seu plano
+    
+    # --- CORREÇÃO PRINCIPAL AQUI ---
+    # A chave correta para especificar um build Docker é 'runtime'
+    runtime: docker
+    
+    # --- AJUSTE IMPORTANTE ---
+    # Define o contexto do build para a raiz do repositório,
+    # onde o Dockerfile deve estar.
+    rootDir: .
+    dockerfilePath: ./Dockerfile
+
+    plan: free
+    
     envVars:
       - key: ASPNETCORE_URLS
         value: http://+:10000
