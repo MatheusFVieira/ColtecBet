@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ColtecBet.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1f856a9b65c2b4170dc9273f62649dad82f38576")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e563894c73319b57eb827ccf5e388f576a94dc08")]
 [assembly: System.Reflection.AssemblyProductAttribute("ColtecBet.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ColtecBet.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
