@@ -106,11 +106,14 @@ using (var scope = app.Services.CreateScope())
 
 
 // --- Configuração do Pipeline de Requisições HTTP ---
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI();
+// }
 
 // A linha abaixo foi comentada para compatibilidade com o proxy reverso do Render.
 // O Render gerencia o SSL/HTTPS externamente.
