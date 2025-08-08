@@ -1,21 +1,27 @@
-// Dentro de src/components/Layout.jsx
+// Caminho: src/components/Layout.jsx
 
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import UserStatus from './UserStatus';
 import '../styles/Layout.css';
 
+// --- PASSO 1: IMPORTAMOS AS IMAGENS COMO SE FOSSEM MÓDULOS ---
+import logoImage from '../assets/logo1.jpg';
+import partnerLogoImage from '../assets/jume.jpg';
+
 function Layout() {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
+    const location = useLocation();
+    const isHomePage = location.pathname === '/';
 
     return (
         <>
             <header>
                 <div className="logo">
-                    <Link to="/"><img src="../../public/logo1.jpg" id="logo1" alt="Logo Coltec.BET"/></Link>
+                    {/* --- PASSO 2: USAMOS A VARIÁVEL IMPORTADA NO 'src' --- */}
+                    <Link to="/"><img src={logoImage} id="logo1" alt="Logo Coltec.BET"/></Link>
                 </div>
-
                 <div className="nav-user-container">
                     <nav>
                         <ul>
@@ -24,13 +30,7 @@ function Layout() {
                             {user?.role === 'Admin' && <li><Link to="/admin">Admin</Link></li>}
                         </ul>
                     </nav>
-
-                    {/* Lógica para mostrar o status do usuário OU o botão de login */}
-                    {user ? (
-                        <UserStatus />
-                    ) : (
-                        <Link to="/login" className="login-btn">Login</Link>
-                    )}
+                    {user ? <UserStatus /> : <Link to="/login" className="login-btn">Login</Link>}
                 </div>
             </header>
             
@@ -40,21 +40,20 @@ function Layout() {
             
             <footer>
                 <div className="footer-spacer"></div>
-
-                {/* Container central com os links */}
                 <div className="footer-center">
-                    <p>&copy; 2025 COLTEC.bet Todos os direitos reservados.</p>
+                    <p>&copy; 2024 Coltec.BET. Todos os direitos reservados.</p>
                     <div className="footer-links">
-                        <Link to="/aviso-legal">Aviso Legal ⚠️</Link>
+                        <Link to="/suporte">Suporte</Link>
+                        <span>|</span>
+                        <Link to="/aviso-legal">Aviso Legal</Link>
                     </div>
                 </div>
-
-                {/* Container do parceiro no canto direito */}
                 <div className="footer-partner">
-                    <img src="../../public/jume.jpg" alt="Jumentus Oficial Partner" className="partner-logo" />
+                    {/* --- PASSO 2: USAMOS A VARIÁVEL IMPORTADA NO 'src' --- */}
+                    <img src={partnerLogoImage} alt="Jumetos Oficial Partner" className="partner-logo" />
                     <div className="partner-text">
-                        <span>Jumentus</span>
-                        <span>Official</span>
+                        <span>Jumetos</span>
+                        <span>Oficial</span>
                         <span>Partner</span>
                     </div>
                 </div>
