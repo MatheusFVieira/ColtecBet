@@ -2,12 +2,11 @@ services:
   - type: web
     name: coltec-bet-api
     
-    # --- CORREÇÃO 1 AQUI ---
-    # A chave correta para definir o ambiente é 'env'
-    env: dotnet
-    
-    # O resto das nossas configurações
+    # A linha 'runtime' ou 'env' foi REMOVIDA.
+    # O Render vai detectar o .NET por causa da rootDir abaixo,
+    # onde ele encontrará o arquivo .csproj.
     rootDir: ColtecBet.Api
+    
     buildCommand: "dotnet publish -c Release -o out"
     startCommand: "dotnet out/ColtecBet.Api.dll"
     healthCheckPath: /swagger/index.html
@@ -18,9 +17,7 @@ services:
       
       - key: ConnectionStrings__DefaultConnection
         fromDatabase:
-          name: coltec-bet-db
-          # --- CORREÇÃO 2 AQUI ---
-          # A propriedade correta para a URL de conexão é 'connectionString'
+          name: coltec-bet-db 
           property: connectionString
 
       # Adicione suas outras variáveis de ambiente aqui
