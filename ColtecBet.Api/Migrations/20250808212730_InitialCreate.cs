@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -15,16 +16,16 @@ namespace ColtecBet.Api.Migrations
                 name: "Partidas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    TimeCasa = table.Column<string>(type: "TEXT", nullable: true),
-                    TimeVisitante = table.Column<string>(type: "TEXT", nullable: true),
-                    DataPartida = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    OddCasa = table.Column<decimal>(type: "TEXT", nullable: false),
-                    OddEmpate = table.Column<decimal>(type: "TEXT", nullable: false),
-                    OddVisitante = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Encerrada = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Resultado = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TimeCasa = table.Column<string>(type: "text", nullable: true),
+                    TimeVisitante = table.Column<string>(type: "text", nullable: true),
+                    DataPartida = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    OddCasa = table.Column<decimal>(type: "numeric", nullable: false),
+                    OddEmpate = table.Column<decimal>(type: "numeric", nullable: false),
+                    OddVisitante = table.Column<decimal>(type: "numeric", nullable: false),
+                    Encerrada = table.Column<bool>(type: "boolean", nullable: false),
+                    Resultado = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -35,12 +36,13 @@ namespace ColtecBet.Api.Migrations
                 name: "Usuarios",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: true),
-                    Email = table.Column<string>(type: "TEXT", nullable: true),
-                    SenhaHash = table.Column<string>(type: "TEXT", nullable: true),
-                    Saldo = table.Column<decimal>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nome = table.Column<string>(type: "text", nullable: true),
+                    Email = table.Column<string>(type: "text", nullable: true),
+                    SenhaHash = table.Column<string>(type: "text", nullable: true),
+                    Saldo = table.Column<decimal>(type: "numeric", nullable: false),
+                    IsAdmin = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,15 +53,15 @@ namespace ColtecBet.Api.Migrations
                 name: "Apostas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UsuarioId = table.Column<int>(type: "INTEGER", nullable: false),
-                    IdPartida = table.Column<int>(type: "INTEGER", nullable: false),
-                    Escolha = table.Column<string>(type: "TEXT", nullable: true),
-                    Valor = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Status = table.Column<string>(type: "TEXT", nullable: false),
-                    ValorRetorno = table.Column<decimal>(type: "TEXT", nullable: false),
-                    PartidaId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UsuarioId = table.Column<int>(type: "integer", nullable: false),
+                    IdPartida = table.Column<int>(type: "integer", nullable: false),
+                    Escolha = table.Column<string>(type: "text", nullable: true),
+                    Valor = table.Column<decimal>(type: "numeric", nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: false),
+                    ValorRetorno = table.Column<decimal>(type: "numeric", nullable: false),
+                    PartidaId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
