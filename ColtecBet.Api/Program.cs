@@ -20,7 +20,7 @@ builder.Services.AddCors(options =>
                       policy  =>
                       {
                           // Lembre-se de adicionar a URL do seu Vercel aqui quando a tiver
-                          policy.WithOrigins("http://localhost:5173", "https://seu-projeto.vercel.app") 
+                          policy.WithOrigins("http://localhost:5173", "https://coltec-bet.vercel.app/") 
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
                       });
