@@ -1,35 +1,32 @@
-// Caminho do Arquivo: ColtecBet.Api/Program.cs
+// Caminho: ColtecBet.Api/Program.cs
 
 using ColtecBet.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.OpenApi.Models; // Necessário para a configuração do Swagger
-
-// --- SEÇÃO DE CONFIGURAÇÃO INICIAL ---
+using Microsoft.OpenApi.Models;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
-// --- SEÇÃO DE REGISTRO DE SERVIÇOS ---
+// --- Configuração dos Serviços ---
 
-// 1. Configuração do CORS
+// 1. CORS (Cross-Origin Resource Sharing)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy  =>
                       {
-                          policy.WithOrigins("http://localhost:5173") 
+                          // Lembre-se de adicionar a URL do seu Vercel aqui quando a tiver
+                          policy.WithOrigins("http://localhost:5173", "https://seu-projeto.vercel.app") 
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
                       });
 });
 
-// 2. Configuração do HttpClientFactory
-builder.Services.AddHttpClient();
-
-// 3. Configuração da Autenticação JWT
+// 2. Autenticação com Token JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -45,20 +42,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// 4. Adiciona o serviço de Controllers
+// 3. HttpClientFactory (para futuras chamadas a APIs externas)
+builder.Services.AddHttpClient();
+
+// 4. Controllers da API
 builder.Services.AddControllers();
 
-// 5. Configuração do Banco de Dados (DbContext)
+// 5. Conexão com o Banco de Dados PostgreSQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-// 6. Configuração do Swagger com suporte para Autenticação
+
+// 6. Swagger (Documentação da API)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    // Adiciona a definição de segurança para o Bearer Token (JWT)
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -69,7 +69,6 @@ builder.Services.AddSwaggerGen(options =>
         Description = "Insira 'Bearer' [espaço] e então o seu token no campo abaixo.\r\n\r\nExemplo: \"Bearer 12345abcdef\""
     });
 
-    // Adiciona o requisito de segurança que usa a definição acima
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -87,13 +86,28 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 
-// --- SEÇÃO DE BUILD DA APLICAÇÃO ---
-
+// --- Construção da Aplicação ---
 var app = builder.Build();
 
-// --- SEÇÃO DE CONFIGURAÇÃO DO PIPELINE HTTP ---
 
-// Configure the HTTP request pipeline.
+// --- Migração Automática do Banco de Dados na Inicialização ---
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ApplicationDbContext>();
+        context.Database.Migrate(); // Aplica as migrações pendentes
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Ocorreu um erro durante a migração do banco de dados.");
+    }
+}
+
+
+// --- Configuração do Pipeline de Requisições HTTP ---
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -104,10 +118,11 @@ app.UseHttpsRedirection();
 
 app.UseCors(MyAllowSpecificOrigins);
 
-// A ordem é importante: Autenticação DEVE vir ANTES de Autorização.
+// A ordem é importante: Autenticação ANTES de Autorização
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
+// --- Execução da Aplicação ---
 app.Run();

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Vieira\\OneDrive\\Documentos\\ColtecBet\\ColtecBet.Api\\ColtecBet.Api.csproj": {}
+    "C:\\Users\\Vieira\\Downloads\\ColtecBet\\ColtecBet.Api\\ColtecBet.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Vieira\\OneDrive\\Documentos\\ColtecBet\\ColtecBet.Api\\ColtecBet.Api.csproj": {
+    "C:\\Users\\Vieira\\Downloads\\ColtecBet\\ColtecBet.Api\\ColtecBet.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vieira\\OneDrive\\Documentos\\ColtecBet\\ColtecBet.Api\\ColtecBet.Api.csproj",
+        "projectUniqueName": "C:\\Users\\Vieira\\Downloads\\ColtecBet\\ColtecBet.Api\\ColtecBet.Api.csproj",
         "projectName": "ColtecBet.Api",
-        "projectPath": "C:\\Users\\Vieira\\OneDrive\\Documentos\\ColtecBet\\ColtecBet.Api\\ColtecBet.Api.csproj",
+        "projectPath": "C:\\Users\\Vieira\\Downloads\\ColtecBet\\ColtecBet.Api\\ColtecBet.Api.csproj",
         "packagesPath": "C:\\Users\\Vieira\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vieira\\OneDrive\\Documentos\\ColtecBet\\ColtecBet.Api\\obj\\",
+        "outputPath": "C:\\Users\\Vieira\\Downloads\\ColtecBet\\ColtecBet.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Vieira\\AppData\\Roaming\\NuGet\\NuGet.Config"

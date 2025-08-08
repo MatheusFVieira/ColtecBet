@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vNa2ALzjYR8=",
+  "dgSpecHash": "lMFfjkXc/IQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Vieira\\OneDrive\\Documentos\\ColtecBet\\ColtecBet.Api\\ColtecBet.Api.csproj",
+  "projectFilePath": "C:\\Users\\Vieira\\Downloads\\ColtecBet\\ColtecBet.Api\\ColtecBet.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Vieira\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Vieira\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.7\\microsoft.aspnetcore.authentication.jwtbearer.8.0.7.nupkg.sha512",
