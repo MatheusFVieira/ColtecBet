@@ -7,26 +7,32 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
 var builder = WebApplication.CreateBuilder(args);
 
-// --- Configuração dos Serviços ---
+// --- CÓDIGO DE DIAGNÓSTICO DE CONEXÃO ---
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+Console.WriteLine("--- DIAGNÓSTICO DE CONEXÃO ---");
+Console.WriteLine($"Connection String lida do ambiente: '{connectionString}'");
+Console.WriteLine($"A Connection String é nula ou vazia? {string.IsNullOrEmpty(connectionString)}");
+Console.WriteLine("--- FIM DO DIAGNÓSTICO ---");
+// --- FIM DO CÓDIGO DE DIAGNÓSTICO ---
 
-// 1. CORS (Cross-Origin Resource Sharing)
+
+// O resto do seu Program.cs continua normalmente...
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+// --- Configuração dos Serviços ---
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy  =>
                       {
-                          // Garanta que a URL do seu Vercel esteja aqui, correta, com https
                           policy.WithOrigins("http://localhost:5173", "https://coltec-bet.vercel.app") 
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
                       });
 });
 
-// 2. Autenticação com Token JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -42,60 +48,32 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// 3. HttpClientFactory
 builder.Services.AddHttpClient();
-
-// 4. Controllers da API
 builder.Services.AddControllers();
 
-// 5. Conexão com o Banco de Dados PostgreSQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 
-// 6. Swagger (Documentação da API)
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "Insira 'Bearer' [espaço] e então o seu token no campo abaixo.\r\n\r\nExemplo: \"Bearer 12345abcdef\""
-    });
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new string[] {}
-        }
-    });
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme { /*...*/ });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement { /*...*/ });
 });
 
 
-// --- Construção da Aplicação ---
 var app = builder.Build();
 
-
-// --- Migração Automática do Banco de Dados na Inicialização ---
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
-        context.Database.Migrate(); // Aplica as migrações pendentes
+        context.Database.Migrate();
     }
     catch (Exception ex)
     {
@@ -104,40 +82,14 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-
-// --- Configuração do Pipeline de Requisições HTTP ---
-
-app.UseSwagger();
-app.UseSwaggerUI();
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
-
-// A linha abaixo foi comentada para compatibilidade com o proxy reverso do Render.
-// O Render gerencia o SSL/HTTPS externamente.
-// app.UseHttpsRedirection(); 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseCors(MyAllowSpecificOrigins);
-
-app.Use(async (context, next) =>
-{
-    if (context.Request.Method == "OPTIONS")
-    {
-        context.Response.StatusCode = 200;
-        return;
-    }
-
-    await next();
-});
-
-// A ordem é importante: Autenticação ANTES de Autorização
 app.UseAuthentication();
 app.UseAuthorization();
-
-
 app.MapControllers();
-
-// --- Execução da Aplicação ---
 app.Run();
