@@ -1,0 +1,32 @@
+services:
+  # Define o nosso serviço de backend (API)
+  - type: web
+    name: coltec-bet-api
+    # A INSTRUÇÃO EXPLÍCITA QUE FALTAVA:
+    # Diz ao Render para usar o ambiente .NET
+    runtime: dotnet
+
+    # O resto das nossas configurações já conhecidas
+    rootDir: ColtecBet.Api
+    buildCommand: "dotnet publish -c Release -o out"
+    startCommand: "dotnet out/ColtecBet.Api.dll"
+
+    # O Render precisa que a aplicação rode em uma porta específica.
+    # Adicionamos essa variável de ambiente para isso.
+    envVars:
+      - key: ASPNETCORE_URLS
+        value: http://+:10000
+
+      # Conecta com o banco de dados que já criamos
+      - key: ConnectionStrings__DefaultConnection
+        fromDatabase:
+          name: coltec-bet-db # DEVE SER O NOME EXATO DO SEU BANCO POSTGRES NO RENDER
+          property: internalConnectionString
+
+      # Adicione suas outras variáveis de ambiente aqui
+      - key: Jwt__Key
+        value: Coltecbetapichava123
+      - key: Jwt__Issuer
+        value: ColtecBet.Api
+      - key: Jwt__Audience
+        value: ColtecBet.Frontend

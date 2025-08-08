@@ -1,7 +1,7 @@
 // Caminho: ColtecBet.Api/Program.cs
 
 using ColtecBet.Api.Data;
-using Microsoft.EntityFrameworkCore; // <-- CORREÇÃO PRINCIPAL AQUI
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -13,17 +13,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 // --- Configuração dos Serviços ---
 
+// 1. CORS (Cross-Origin Resource Sharing)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy  =>
                       {
+                          // Lembre-se de adicionar a URL do seu Vercel aqui quando a tiver
                           policy.WithOrigins("http://localhost:5173", "https://seu-projeto.vercel.app") 
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
                       });
 });
 
+// 2. Autenticação com Token JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -39,15 +42,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+// 3. HttpClientFactory
 builder.Services.AddHttpClient();
+
+// 4. Controllers da API
 builder.Services.AddControllers();
 
+// 5. Conexão com o Banco de Dados PostgreSQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddEndpointsApiExplorer();
+
+// 6. Swagger (Documentação da API)
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -75,15 +83,19 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+
+// --- Construção da Aplicação ---
 var app = builder.Build();
 
+
+// --- Migração Automática do Banco de Dados na Inicialização ---
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
-        context.Database.Migrate();
+        context.Database.Migrate(); // Aplica as migrações pendentes
     }
     catch (Exception ex)
     {
@@ -92,15 +104,25 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+
+// --- Configuração do Pipeline de Requisições HTTP ---
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// A linha abaixo foi comentada para compatibilidade com o proxy reverso do Render.
+// O Render gerencia o SSL/HTTPS externamente.
+// app.UseHttpsRedirection(); 
+
 app.UseCors(MyAllowSpecificOrigins);
+
+// A ordem é importante: Autenticação ANTES de Autorização
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
+
+// --- Execução da Aplicação ---
 app.Run();
