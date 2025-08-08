@@ -43,9 +43,7 @@ function Layout() {
                 <div className="footer-center">
                     <p>&copy; 2024 Coltec.BET. Todos os direitos reservados.</p>
                     <div className="footer-links">
-                        <Link to="/suporte">Suporte</Link>
-                        <span>|</span>
-                        <Link to="/aviso-legal">Aviso Legal</Link>
+                        <Link to="/aviso-legal">Aviso Legal ⚠️</Link>
                     </div>
                 </div>
                 <div className="footer-partner">
