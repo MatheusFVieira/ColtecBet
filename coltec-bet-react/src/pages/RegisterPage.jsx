@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../api/axiosConfig'
-import '../styles/pages/LoginPage.css'
+import '../styles/LoginPage.css'
 
 function RegisterPage() {
     const [nome, setNome] = useState('');
