@@ -1,25 +1,22 @@
-# Etapa base com o runtime do .NET 8
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
-EXPOSE 10000
-
-# Etapa de build com o SDK do .NET 8
+# Estágio 1: Build
+# Usa a imagem do SDK do .NET 8 para compilar a aplicação
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copia o arquivo .csproj e faz restore
-COPY ["ColtecBet.Api.csproj", "ColtecBet.Api/"]
-RUN dotnet restore "ColtecBet.Api.csproj"
+# Copia o arquivo .csproj primeiro para otimizar o cache do Docker
+COPY ColtecBet.Api/ColtecBet.Api.csproj ColtecBet.Api/
+RUN dotnet restore "ColtecBet.Api/ColtecBet.Api.csproj"
 
-# Copia todo o restante do código
+# Copia o resto dos arquivos do projeto
 COPY . .
 
-# Publica o projeto
-WORKDIR "/src/ColtecBet.Api"
+# Entra na pasta da API e executa o 'publish'
+WORKDIR /src/ColtecBet.Api
 RUN dotnet publish "ColtecBet.Api.csproj" -c Release -o /app/publish
 
-# Etapa final: roda a aplicação publicada
-FROM base AS final
+# Estágio 2: Final
+# Usa a imagem menor do ASP.NET Runtime para rodar a aplicação
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "ColtecBet.Api.dll"]
