@@ -1,0 +1,29 @@
+/* Dentro de src/styles/UserStatus.css */
+.user-status-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.saldo-display {
+    font-size: 16px;
+    font-weight: bold;
+    color: white; /* O fundo agora é sempre o header azul */
+}
+
+.logout-btn-header {
+    background: none;
+    border: 1px solid white;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Andale Mono', monospace;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.logout-btn-header:hover {
+    background-color: white;
+    color: rgba(0, 75, 133, 1);
+}
