@@ -1,7 +1,9 @@
 services:
   - type: web
     name: coltec-bet-api
+    env: docker    # 👈 ESSENCIAL: diz que esse serviço é baseado em Docker
     dockerfilePath: Dockerfile
+    plan: free     # ou starter, dependendo do seu plano
     envVars:
       - key: ASPNETCORE_URLS
         value: http://+:10000
