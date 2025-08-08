@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../api/axiosConfig'; // <-- MUDANÇA AQUI
-import '../styles/pages/LoginPage.css';
+import '../styles/LoginPage.css';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
