@@ -19,8 +19,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy  =>
                       {
-                          // Lembre-se de adicionar a URL do seu Vercel aqui quando a tiver
-                          policy.WithOrigins("https://coltec-bet.vercel.app", "http://localhost:5173") 
+                          // Garanta que a URL do seu Vercel esteja aqui, correta, com https
+                          policy.WithOrigins("http://localhost:5173", "https://coltec-bet.vercel.app") 
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
                       });
