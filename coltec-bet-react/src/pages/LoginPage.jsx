@@ -1,17 +1,17 @@
-// Dentro de src/pages/LoginPage.jsx
+// Caminho: src/pages/LoginPage.jsx
 
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom'; // Importa o Navigate
-import '../styles/LoginPage.css';
+import { Link, useNavigate } from 'react-router-dom';
+import api from '../api/axiosConfig'; // <-- MUDANÇA AQUI
+import '../styles/pages/LoginPage.css';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
+  
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -19,11 +19,11 @@ function LoginPage() {
     event.preventDefault();
     setIsLoading(true);
     setMessage('');
-
+    
     try {
-      const response = await axios.post('http://localhost:5177/api/usuarios/login', { email, senha });
+      // <-- MUDANÇA AQUI: Usamos 'api.post' e a URL relativa
+      const response = await api.post('/api/usuarios/login', { email, senha });
       login(response.data.token);
-      // Após o login, redireciona para a página de apostas
       navigate('/apostas'); 
     } catch (error) {
       setMessage(error.response?.data?.message || 'Erro ao conectar.');
@@ -37,29 +37,14 @@ function LoginPage() {
         <div className="login-box">
             <h2>Login na Coltec.BET</h2>
             <form onSubmit={handleSubmit}>
-                <div className="input-box">
+                 {/* O JSX do formulário continua o mesmo */}
+                 <div className="input-box">
                     <label htmlFor="email">Email</label>
-                    <input 
-                      type="email" 
-                      id="email" 
-                      name="email" 
-                      placeholder="Digite seu email" 
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required 
-                    />
+                    <input type="email" id="email" name="email" placeholder="Digite seu email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
                 <div className="input-box">
                     <label htmlFor="password">Senha</label>
-                    <input 
-                      type="password" 
-                      id="password" 
-                      name="password" 
-                      placeholder="Digite sua senha" 
-                      value={senha}
-                      onChange={(e) => setSenha(e.target.value)}
-                      required 
-                    />
+                    <input type="password" id="password" name="password" placeholder="Digite sua senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
                 </div>
                 <div className="input-box">
                     <button type="submit" className="login-btn-form" disabled={isLoading}>

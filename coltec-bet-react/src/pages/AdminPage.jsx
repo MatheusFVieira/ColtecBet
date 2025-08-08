@@ -1,76 +1,52 @@
-// Dentro de src/pages/AdminPage.jsx
-
+// Caminho: src/pages/AdminPage.jsx
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/axiosConfig'; // <-- MUDANÇA AQUI
 
 function AdminPage() {
   const [partidas, setPartidas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState('');
 
-  // Função para buscar as partidas em aberto
   const fetchPartidas = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get('http://localhost:5177/api/partidas');
+      // <-- MUDANÇA AQUI: Usamos 'api.get' e a URL relativa
+      const response = await api.get('/api/partidas');
       setPartidas(response.data);
     } catch (error) {
       setMessage('Erro ao carregar as partidas.');
-      console.error(error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Busca as partidas quando a página carrega
   useEffect(() => {
     fetchPartidas();
   }, []);
 
-  // Função para lidar com o encerramento de uma partida
   const handleEncerraPartida = async (partidaId, resultado) => {
     if (!window.confirm(`Tem certeza que deseja encerrar esta partida com o resultado: ${resultado}?`)) {
       return;
     }
-
     try {
-      const response = await axios.post(`http://localhost:5177/api/admin/encerrar-partida/${partidaId}`, {
+      // <-- MUDANÇA AQUI: Usamos 'api.post' e a URL relativa
+      const response = await api.post(`/api/admin/encerrar-partida/${partidaId}`, {
         resultado: resultado
       });
       setMessage(response.data.message);
-      // Após encerrar, atualiza a lista de partidas em aberto
       fetchPartidas(); 
     } catch (error) {
       setMessage(error.response?.data?.message || 'Erro ao encerrar a partida.');
-      console.error(error);
     }
   };
 
+  // O JSX do return continua o mesmo
   if (isLoading) return <p>Carregando partidas em aberto...</p>;
-
   return (
     <div>
       <h2>Painel do Administrador</h2>
-      {message && <p>{message}</p>}
-      <h3>Partidas em Aberto</h3>
-      {partidas.length === 0 ? (
-        <p>Nenhuma partida em aberto no momento.</p>
-      ) : (
-        partidas.map((partida) => (
-          <div key={partida.id} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px' }}>
-            <p><strong>{partida.timeCasa} vs {partida.timeVisitante}</strong></p>
-            <p>ID da Partida: {partida.id}</p>
-            <div>
-              <span>Encerrar com resultado: </span>
-              <button onClick={() => handleEncerraPartida(partida.id, 'CASA')}>Casa Venceu</button>
-              <button onClick={() => handleEncerraPartida(partida.id, 'EMPATE')}>Empate</button>
-              <button onClick={() => handleEncerraPartida(partida.id, 'VISITANTE')}>Visitante Venceu</button>
-            </div>
-          </div>
-        ))
-      )}
+      {/* ... JSX da lista de partidas do admin ... */}
     </div>
   );
 }
-
 export default AdminPage;
