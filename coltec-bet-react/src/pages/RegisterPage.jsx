@@ -1,9 +1,8 @@
 // Caminho: src/pages/RegisterPage.jsx
-
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import api from '../api/axiosConfig'; // <-- MUDANÇA AQUI
-import '../styles/LoginPage.css'; 
+import { Link, useNavigate } from 'react-router-dom'
+import api from '../api/axiosConfig'
+import '../styles/pages/LoginPage.css'
 
 function RegisterPage() {
     const [nome, setNome] = useState('');
@@ -19,29 +18,35 @@ function RegisterPage() {
         setMessage('');
 
         try {
-            // <-- MUDANÇA AQUI: Usamos 'api.post' e a URL relativa
             await api.post('/api/usuarios/registrar', {
                 nome,
                 email,
                 senha
             });
-
             alert('Registro realizado com sucesso! Por favor, faça o login.');
             navigate('/login');
-
         } catch (error) {
-            setMessage(error.response?.data || 'Ocorreu um erro durante o registro.');
+            // Tratamento de erro mais robusto para evitar a tela branca
+            let errorMessage = 'Ocorreu um erro durante o registro.';
+            if (error.response) {
+                // Erro veio do backend (ex: email já existe)
+                errorMessage = error.response.data.message || error.response.data;
+            } else if (error.request) {
+                // Erro de conexão (não conseguiu chegar no backend)
+                errorMessage = 'Não foi possível se conectar ao servidor. Verifique a URL da API e a permissão de CORS.';
+            }
+            setMessage(errorMessage);
         } finally {
             setIsLoading(false);
         }
     };
 
+    // O JSX do return continua o mesmo
     return (
         <section className="login-section">
             <div className="login-box">
                 <h2>Crie sua Conta</h2>
                 <form onSubmit={handleSubmit}>
-                    {/* O JSX do formulário continua o mesmo */}
                     <div className="input-box">
                         <label htmlFor="nome">Nome</label>
                         <input type="text" id="nome" placeholder="Digite seu nome completo" value={nome} onChange={(e) => setNome(e.target.value)} required />
