@@ -1,7 +1,7 @@
 // Caminho: ColtecBet.Api/Program.cs
 
 using ColtecBet.Api.Data;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore; // <-- CORREÇÃO PRINCIPAL AQUI
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -13,20 +13,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // --- Configuração dos Serviços ---
 
-// 1. CORS (Cross-Origin Resource Sharing)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy  =>
                       {
-                          // Lembre-se de adicionar a URL do seu Vercel aqui quando a tiver
                           policy.WithOrigins("http://localhost:5173", "https://seu-projeto.vercel.app") 
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
                       });
 });
 
-// 2. Autenticação com Token JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -42,20 +39,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// 3. HttpClientFactory (para futuras chamadas a APIs externas)
 builder.Services.AddHttpClient();
-
-// 4. Controllers da API
 builder.Services.AddControllers();
 
-// 5. Conexão com o Banco de Dados PostgreSQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-
-// 6. Swagger (Documentação da API)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -68,7 +59,6 @@ builder.Services.AddSwaggerGen(options =>
         In = ParameterLocation.Header,
         Description = "Insira 'Bearer' [espaço] e então o seu token no campo abaixo.\r\n\r\nExemplo: \"Bearer 12345abcdef\""
     });
-
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -85,19 +75,15 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-
-// --- Construção da Aplicação ---
 var app = builder.Build();
 
-
-// --- Migração Automática do Banco de Dados na Inicialização ---
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
-        context.Database.Migrate(); // Aplica as migrações pendentes
+        context.Database.Migrate();
     }
     catch (Exception ex)
     {
@@ -106,8 +92,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-
-// --- Configuração do Pipeline de Requisições HTTP ---
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -115,14 +99,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseCors(MyAllowSpecificOrigins);
-
-// A ordem é importante: Autenticação ANTES de Autorização
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
-// --- Execução da Aplicação ---
 app.Run();

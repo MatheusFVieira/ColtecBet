@@ -334,3 +334,5 @@ C:\Users\Vieira\Downloads\ColtecBet\ColtecBet.Api\obj\Debug\net8.0\refint\Coltec
 C:\Users\Vieira\Downloads\ColtecBet\ColtecBet.Api\obj\Debug\net8.0\ColtecBet.Api.pdb
 C:\Users\Vieira\Downloads\ColtecBet\ColtecBet.Api\obj\Debug\net8.0\ColtecBet.Api.genruntimeconfig.cache
 C:\Users\Vieira\Downloads\ColtecBet\ColtecBet.Api\obj\Debug\net8.0\ref\ColtecBet.Api.dll
+C:\Users\Vieira\Downloads\ColtecBet\ColtecBet.Api\bin\Debug\net8.0\Npgsql.dll
+C:\Users\Vieira\Downloads\ColtecBet\ColtecBet.Api\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll

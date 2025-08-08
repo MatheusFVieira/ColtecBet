@@ -1,8 +1,7 @@
-// Dentro de DTOs/EncerrarPartidaDto.cs
+// Caminho: ColtecBet.Api/DTOs/EncerrarPartidaDto.cs
 namespace ColtecBet.Api.DTOs;
 
 public class EncerrarPartidaDto
 {
-    // O resultado pode ser "CASA", "EMPATE" ou "VISITANTE"
-    public string Resultado { get; set; }
+    public string? Resultado { get; set; } // Propriedade agora é anulável
 }
