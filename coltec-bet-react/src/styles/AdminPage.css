@@ -55,3 +55,52 @@
     background-color: rgba(0, 75, 133, 1);
     color: white;
 }
+
+/* Adicione este bloco ao final de src/styles/pages/AdminPage.css */
+
+.admin-actions-header {
+    display: flex;
+    justify-content: space-between; /* Alinha o título à esquerda e o botão à direita */
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.admin-actions-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5em;
+}
+
+.add-partida-btn {
+    background-color: #28a745; /* Um verde para a ação de 'adicionar' */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-family: 'Andale Mono', monospace;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-partida-btn:hover {
+    background-color: #218838; /* Um verde mais escuro ao passar o mouse */
+}
+
+/* Estilos para o formulário dentro do modal para deixá-lo mais bonito */
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.modal-content form input {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'Andale Mono', monospace;
+}
