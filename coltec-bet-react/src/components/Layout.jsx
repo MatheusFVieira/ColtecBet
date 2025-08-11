@@ -41,14 +41,14 @@ function Layout() {
             <footer>
                 <div className="footer-spacer"></div>
                 <div className="footer-center">
-                    <p>&copy; 2024 Coltec.BET. Todos os direitos reservados.</p>
+                    <p>&copy; 2025 Coltec.BET. Todos os direitos reservados.</p>
                     <div className="footer-links">
                         <Link to="/aviso-legal">Aviso Legal ⚠️</Link>
                     </div>
                 </div>
                 <div className="footer-partner">
                     {/* --- PASSO 2: USAMOS A VARIÁVEL IMPORTADA NO 'src' --- */}
-                    <img src={partnerLogoImage} alt="Jumetos Oficial Partner" className="partner-logo" />
+                    <img src={partnerLogoImage} alt="Jumentus Oficial Partner" className="partner-logo" />
                     <div className="partner-text">
                         <span>Jumetos</span>
                         <span>Oficial</span>
