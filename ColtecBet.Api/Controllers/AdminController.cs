@@ -21,12 +21,50 @@ namespace ColtecBet.Api.Controllers
             _context = context;
         }
 
+        // --- MÉTODO PARA CRIAR PARTIDAS ---
+        // POST: api/admin/partidas
+        [HttpPost("partidas")]
+        public async Task<ActionResult<Partida>> CriarPartida(CriarPartidaDto criarPartidaDto)
+        {
+            if (criarPartidaDto == null)
+            {
+                return BadRequest("Dados da partida inválidos.");
+            }
+
+            var novaPartida = new Partida
+            {
+                TimeCasa = criarPartidaDto.TimeCasa,
+                TimeVisitante = criarPartidaDto.TimeVisitante,
+                DataPartida = criarPartidaDto.DataPartida,
+                OddCasa = criarPartidaDto.OddCasa,
+                OddEmpate = criarPartidaDto.OddEmpate,
+                OddVisitante = criarPartidaDto.OddVisitante,
+                Encerrada = false,
+                Resultado = null
+            };
+
+            _context.Partidas.Add(novaPartida);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(CriarPartida), new { id = novaPartida.Id }, novaPartida);
+        }
+
+        // --- MÉTODO PARA ENCERRAR PARTIDAS ---
+        // POST: api/admin/encerrar-partida/{partidaId}
         [HttpPost("encerrar-partida/{partidaId}")]
         public async Task<IActionResult> EncerrarPartida(int partidaId, [FromBody] EncerrarPartidaDto encerrarPartidaDto)
         {
             var partida = await _context.Partidas.FindAsync(partidaId);
-            if (partida == null) return NotFound("Partida não encontrada.");
-            if (partida.Encerrada) return BadRequest("Esta partida já foi encerrada.");
+
+            if (partida == null)
+            {
+                return NotFound("Partida não encontrada.");
+            }
+
+            if (partida.Encerrada)
+            {
+                return BadRequest("Esta partida já foi encerrada.");
+            }
 
             partida.Encerrada = true;
             partida.Resultado = encerrarPartidaDto.Resultado;
@@ -38,7 +76,7 @@ namespace ColtecBet.Api.Controllers
 
             foreach (var aposta in apostasDaPartida)
             {
-                if (aposta.Usuario == null) continue; // Verificação para remover o aviso
+                if (aposta.Usuario == null) continue;
 
                 if (aposta.Escolha == partida.Resultado)
                 {
@@ -60,6 +98,7 @@ namespace ColtecBet.Api.Controllers
             }
 
             await _context.SaveChangesAsync();
+
             return Ok(new { Message = $"Partida {partida.TimeCasa} vs {partida.TimeVisitante} encerrada com sucesso. {apostasDaPartida.Count} apostas foram processadas." });
         }
     }
