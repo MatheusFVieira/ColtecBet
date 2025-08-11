@@ -1,6 +1,7 @@
 // Caminho: src/pages/ApostasPage.jsx
+
 import React, { useState, useEffect } from 'react';
-import api from '../api/axiosConfig'; // <-- MUDANÇA AQUI
+import api from '../api/axiosConfig';
 import { useAuth } from '../context/AuthContext';
 
 function ApostasPage() {
@@ -20,11 +21,11 @@ function ApostasPage() {
   const fetchPartidas = async () => {
     try {
       setIsLoading(true);
-      // <-- MUDANÇA AQUI: Usamos 'api.get' e a URL relativa
       const response = await api.get('/api/partidas');
       setPartidas(response.data);
     } catch (err) {
       setError('Não foi possível carregar os jogos.');
+      console.error("Erro detalhado:", err);
     } finally {
       setIsLoading(false);
     }
@@ -38,12 +39,11 @@ function ApostasPage() {
 
   const handlePlaceBet = async (event) => {
     event.preventDefault();
-    if (betValue <= 0) {
+    if (!betValue || parseFloat(betValue) <= 0) {
       setBetMessage('Por favor, insira um valor válido.');
       return;
     }
     try {
-      // <-- MUDANÇA AQUI: Usamos 'api.post' e a URL relativa
       const response = await api.post('/api/apostas', {
         partidaId: selectedBet.partida.id,
         escolha: selectedBet.escolha,
@@ -61,14 +61,63 @@ function ApostasPage() {
     }
   };
 
-  // O JSX do return continua o mesmo
   if (isLoading) return <p>Carregando partidas...</p>;
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
+
   return (
     <div>
       <h2>Partidas Disponíveis</h2>
-      {/* ... JSX da lista de partidas e do modal ... */}
+      {partidas.length === 0 ? (
+        <p>Nenhuma partida disponível no momento.</p>
+      ) : (
+        partidas.map((partida) => (
+          // --- GARANTINDO QUE OS NOMES ESTÃO CORRETOS (camelCase) ---
+          <div key={partida.id} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px' }}>
+            <h3 style={{textAlign: 'center'}}>{partida.timeCasa} vs {partida.timeVisitante}</h3>
+            <p style={{textAlign: 'center'}}>Data: {new Date(partida.dataPartida).toLocaleString('pt-BR')}</p>
+            <div style={{textAlign: 'center'}}>
+              <strong>Odds:</strong>
+              <button onClick={() => handleBetClick(partida, 'CASA', partida.oddCasa)}>Casa: {partida.oddCasa}</button>
+              <button onClick={() => handleBetClick(partida, 'EMPATE', partida.oddEmpate)}>Empate: {partida.oddEmpate}</button>
+              <button onClick={() => handleBetClick(partida, 'VISITANTE', partida.oddVisitante)}>Visitante: {partida.oddVisitante}</button>
+            </div>
+          </div>
+        ))
+      )}
+
+      {/* O MODAL DE APOSTA */}
+      {isModalOpen && selectedBet && (
+        <div className="modal-backdrop">
+          <div className="modal-content">
+            <h3>Confirmar Aposta</h3>
+            <p>
+              <strong>Partida:</strong> {selectedBet.partida.timeCasa} vs {selectedBet.partida.timeVisitante}
+            </p>
+            <p>
+              <strong>Sua Escolha:</strong> {selectedBet.escolha} (Odd: {selectedBet.odd})
+            </p>
+            <form onSubmit={handlePlaceBet}>
+              <label>Valor da Aposta (R$):</label>
+              <input
+                type="number"
+                value={betValue}
+                onChange={(e) => setBetValue(e.target.value)}
+                placeholder="0.00"
+                step="0.01"
+                min="0.01"
+                required
+              />
+              <div className="modal-actions">
+                <button type="submit">Apostar</button>
+                <button type="button" onClick={() => setIsModalOpen(false)}>Cancelar</button>
+              </div>
+            </form>
+            {betMessage && <p>{betMessage}</p>}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
 export default ApostasPage;
