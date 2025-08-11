@@ -31,11 +31,14 @@ namespace ColtecBet.Api.Controllers
                 return BadRequest("Dados da partida inválidos.");
             }
 
+            // Converte a data recebida (que é local e não especificada) para o formato UTC.
+            var dataPartidaUtc = criarPartidaDto.DataPartida.ToUniversalTime();
+
             var novaPartida = new Partida
             {
                 TimeCasa = criarPartidaDto.TimeCasa,
                 TimeVisitante = criarPartidaDto.TimeVisitante,
-                DataPartida = criarPartidaDto.DataPartida,
+                DataPartida = dataPartidaUtc, // Usa a data convertida para UTC
                 OddCasa = criarPartidaDto.OddCasa,
                 OddEmpate = criarPartidaDto.OddEmpate,
                 OddVisitante = criarPartidaDto.OddVisitante,
