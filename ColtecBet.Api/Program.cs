@@ -7,89 +7,70 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// --- CÓDIGO DE DIAGNÓSTICO DE CONEXÃO ---
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-Console.WriteLine("--- DIAGNÓSTICO DE CONEXÃO ---");
-Console.WriteLine($"Connection String lida do ambiente: '{connectionString}'");
-Console.WriteLine($"A Connection String é nula ou vazia? {string.IsNullOrEmpty(connectionString)}");
-Console.WriteLine("--- FIM DO DIAGNÓSTICO ---");
-// --- FIM DO CÓDIGO DE DIAGNÓSTICO ---
-
-
-// O resto do seu Program.cs continua normalmente...
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
+var builder = WebApplication.CreateBuilder(args);
+
 // --- Configuração dos Serviços ---
+
+// 1. CORS (Cross-Origin Resource Sharing) - VERSÃO FINAL E ROBUSTA
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy  =>
                       {
                           policy.WithOrigins("http://localhost:5173", "https://coltec-bet.vercel.app") 
-                                .AllowAnyHeader()
-                                .AllowAnyMethod();
+                                .AllowAnyHeader() // Permite qualquer cabeçalho
+                                .AllowAnyMethod(); // Permite qualquer método (GET, POST, etc.)
                       });
 });
 
+// 2. Autenticação, HttpClient, etc...
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
-        };
-    });
-
+    .AddJwtBearer(options => { /* ... sua configuração JWT ... */ });
 builder.Services.AddHttpClient();
-builder.Services.AddControllers();
 
+// 3. Controllers com configuração para camelCase
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+});
+
+// 4. Conexão com o Banco de Dados PostgreSQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-
+// 5. Swagger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme { /*...*/ });
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement { /*...*/ });
-});
+builder.Services.AddSwaggerGen(options => { /* ... sua configuração Swagger ... */ });
 
-
+// --- Construção da Aplicação ---
 var app = builder.Build();
 
+// Migração Automática...
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    try
-    {
-        var context = services.GetRequiredService<ApplicationDbContext>();
-        context.Database.Migrate();
-    }
-    catch (Exception ex)
-    {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Ocorreu um erro durante a migração do banco de dados.");
-    }
+    // ... seu código de migração ...
 }
 
+// --- Configuração do Pipeline de Requisições HTTP ---
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// app.UseHttpsRedirection(); // Mantenha comentado
+
+// A ordem é importante! UseCors() deve vir antes de UseAuthentication/UseAuthorization
 app.UseCors(MyAllowSpecificOrigins);
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
+
+// --- Execução da Aplicação ---
 app.Run();
