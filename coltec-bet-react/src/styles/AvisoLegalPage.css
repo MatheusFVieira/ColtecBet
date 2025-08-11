@@ -54,3 +54,26 @@
     background-color: rgba(0, 60, 110, 1);
     transform: translateY(-2px);
 }
+
+@media (max-width: 768px) {
+    .legal-container {
+        margin: 20px 10px;
+        padding: 20px;
+    }
+
+    .legal-container h2 {
+        font-size: 1.8em;
+    }
+
+    .legal-content p {
+        font-size: 1em;
+    }
+
+    .legal-contact h3 {
+        font-size: 1.2em;
+    }
+
+    .support-button {
+        padding: 10px 20px;
+    }
+}

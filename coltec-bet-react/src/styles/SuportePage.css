@@ -37,4 +37,35 @@
     color: white;
 }
 
-/* Adicione as Media Queries do seu arquivo original aqui se desejar */
+@media (max-width: 768px) {
+    .support-section {
+        padding: 30px 15px;
+    }
+
+    .support-section h2 {
+        font-size: 28px;
+    }
+
+    .support-section p {
+        font-size: 16px;
+    }
+
+    .email-link {
+        font-size: 18px;
+        padding: 8px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .support-section h2 {
+        font-size: 24px;
+    }
+
+    .support-section p {
+        font-size: 14px;
+    }
+
+    .email-link {
+        font-size: 16px;
+    }
+}
