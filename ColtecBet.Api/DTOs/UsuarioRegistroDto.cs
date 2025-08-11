@@ -1,4 +1,3 @@
-// Verifique se a primeira linha está EXATAMENTE assim
 namespace ColtecBet.Api.DTOs;
 
 public class UsuarioRegistroDto

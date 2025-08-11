@@ -1,4 +1,3 @@
-// Caminho: src/api/axiosConfig.js
 import axios from 'axios';
 
 const api = axios.create({

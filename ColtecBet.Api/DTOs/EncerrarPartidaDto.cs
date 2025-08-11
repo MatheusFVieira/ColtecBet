@@ -1,4 +1,3 @@
-// Caminho: ColtecBet.Api/DTOs/EncerrarPartidaDto.cs
 namespace ColtecBet.Api.DTOs;
 
 public class EncerrarPartidaDto

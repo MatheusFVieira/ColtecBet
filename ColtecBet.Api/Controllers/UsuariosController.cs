@@ -1,5 +1,3 @@
-// Caminho do Arquivo: ColtecBet.Api/Controllers/UsuariosController.cs
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ColtecBet.Api.Data;
@@ -38,7 +36,7 @@ namespace ColtecBet.Api.Controllers
             {
                 Nome = registroDto.Nome,
                 Email = registroDto.Email,
-                SenhaHash = registroDto.Senha // Lembrete: Em produção, usaríamos hash aqui.
+                SenhaHash = registroDto.Senha
             };
 
             _context.Usuarios.Add(novoUsuario);
@@ -75,7 +73,6 @@ namespace ColtecBet.Api.Controllers
                 new Claim("saldo", user.Saldo.ToString())
             };
 
-            // Se o usuário for um administrador, adicionamos uma "role" (papel) de Admin ao token.
             if (user.IsAdmin)
             {
                 claims.Add(new Claim(ClaimTypes.Role, "Admin"));

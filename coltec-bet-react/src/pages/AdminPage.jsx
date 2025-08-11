@@ -1,5 +1,3 @@
-// Caminho: src/pages/AdminPage.jsx
-
 import React, { useState, useEffect } from 'react';
 import api from '../api/axiosConfig';
 import '../styles/AdminPage.css';

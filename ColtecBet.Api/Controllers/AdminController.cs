@@ -1,5 +1,3 @@
-// Caminho: ColtecBet.Api/Controllers/AdminController.cs
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +36,7 @@ namespace ColtecBet.Api.Controllers
             {
                 TimeCasa = criarPartidaDto.TimeCasa,
                 TimeVisitante = criarPartidaDto.TimeVisitante,
-                DataPartida = dataPartidaUtc, // Usa a data convertida para UTC
+                DataPartida = dataPartidaUtc,
                 OddCasa = criarPartidaDto.OddCasa,
                 OddEmpate = criarPartidaDto.OddEmpate,
                 OddVisitante = criarPartidaDto.OddVisitante,

@@ -1,4 +1,3 @@
-// Caminho: ColtecBet.Api/DTOs/CriarPartidaDto.cs
 namespace ColtecBet.Api.DTOs;
 
 public class CriarPartidaDto

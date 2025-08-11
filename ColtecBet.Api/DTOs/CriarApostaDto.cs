@@ -1,4 +1,3 @@
-// Caminho: ColtecBet.Api/DTOs/CriarApostaDto.cs
 namespace ColtecBet.Api.DTOs;
 
 public class CriarApostaDto

@@ -1,4 +1,3 @@
-// Dentro de DTOs/LoginDto.cs
 namespace ColtecBet.Api.DTOs;
 
 public class LoginDto

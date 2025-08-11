@@ -1,5 +1,3 @@
-// Caminho: src/pages/ApostasPage.jsx
-
 import React, { useState, useEffect } from 'react';
 import api from '../api/axiosConfig';
 import { useAuth } from '../context/AuthContext';
@@ -73,7 +71,6 @@ function ApostasPage() {
         <p>Nenhuma partida disponível no momento.</p>
       ) : (
         partidas.map((partida) => (
-          // Aplicando as novas classes de CSS para o card
           <div key={partida.id} className="partida-card">
             <div className="partida-header">
               <h3>{partida.timeCasa} vs {partida.timeVisitante}</h3>
@@ -88,7 +85,6 @@ function ApostasPage() {
         ))
       )}
 
-      {/* O MODAL DE APOSTA (sem alterações) */}
       {isModalOpen && selectedBet && (
         <div className="modal-backdrop">
           <div className="modal-content">

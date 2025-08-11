@@ -1,4 +1,3 @@
-// Dentro de Models/Usuario.cs
 namespace ColtecBet.Api.Models;
 
 public class Usuario

@@ -1,4 +1,3 @@
-// Dentro de src/pages/HomePage.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -17,7 +16,6 @@ function HomePage() {
     };
 
     return (
-        // O <main> foi movido para o Layout, então usamos um Fragment <> aqui
         <>
             <section className="hero">
                 <div className="hero-text">

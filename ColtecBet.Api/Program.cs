@@ -1,5 +1,3 @@
-// Caminho: ColtecBet.Api/Program.cs (Versão final para produção)
-
 using ColtecBet.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -45,7 +43,6 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
-    // Garante que o frontend receba os dados em camelCase, o padrão do JavaScript
     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
 });
 
@@ -81,7 +78,6 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
-
 
 // --- Construção da Aplicação ---
 var app = builder.Build();

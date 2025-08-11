@@ -1,8 +1,7 @@
-// Dentro de Data/ApplicationDbContext.cs
 namespace ColtecBet.Api.Data;
 
 using Microsoft.EntityFrameworkCore;
-using ColtecBet.Api.Models; // Importa nossos modelos
+using ColtecBet.Api.Models;
 
 public class ApplicationDbContext : DbContext
 {
@@ -10,7 +9,6 @@ public class ApplicationDbContext : DbContext
     {
     }
 
-    // Mapeia nossas classes para tabelas no banco de dados
     public DbSet<Usuario> Usuarios { get; set; }
     public DbSet<Partida> Partidas { get; set; }
     public DbSet<Aposta> Apostas { get; set; }

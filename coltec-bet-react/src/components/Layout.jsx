@@ -1,12 +1,9 @@
-// Caminho: src/components/Layout.jsx
-
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import UserStatus from './UserStatus';
 import '../styles/Layout.css';
 
-// --- PASSO 1: IMPORTAMOS AS IMAGENS COMO SE FOSSEM MÓDULOS ---
 import logoImage from '../assets/logo1.jpg';
 import partnerLogoImage from '../assets/jume.jpg';
 
@@ -19,7 +16,6 @@ function Layout() {
         <>
             <header>
                 <div className="logo">
-                    {/* --- PASSO 2: USAMOS A VARIÁVEL IMPORTADA NO 'src' --- */}
                     <Link to="/"><img src={logoImage} id="logo1" alt="Logo Coltec.BET"/></Link>
                 </div>
                 <div className="nav-user-container">
@@ -47,7 +43,6 @@ function Layout() {
                     </div>
                 </div>
                 <div className="footer-partner">
-                    {/* --- PASSO 2: USAMOS A VARIÁVEL IMPORTADA NO 'src' --- */}
                     <img src={partnerLogoImage} alt="Jumentus Oficial Partner" className="partner-logo" />
                     <div className="partner-text">
                         <span>Jumentus</span>

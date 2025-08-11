@@ -1,4 +1,3 @@
-// Caminho: src/pages/RegisterPage.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../api/axiosConfig'
@@ -26,13 +25,10 @@ function RegisterPage() {
             alert('Registro realizado com sucesso! Por favor, faça o login.');
             navigate('/login');
         } catch (error) {
-            // Tratamento de erro mais robusto para evitar a tela branca
             let errorMessage = 'Ocorreu um erro durante o registro.';
             if (error.response) {
-                // Erro veio do backend (ex: email já existe)
                 errorMessage = error.response.data.message || error.response.data;
             } else if (error.request) {
-                // Erro de conexão (não conseguiu chegar no backend)
                 errorMessage = 'Não foi possível se conectar ao servidor. Verifique a URL da API e a permissão de CORS.';
             }
             setMessage(errorMessage);
@@ -41,7 +37,6 @@ function RegisterPage() {
         }
     };
 
-    // O JSX do return continua o mesmo
     return (
         <section className="login-section">
             <div className="login-box">

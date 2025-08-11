@@ -1,7 +1,5 @@
-// Dentro de src/pages/SuportePage.jsx
-
 import React from 'react';
-import '../styles/SuportePage.css'; // CSS específico para esta página
+import '../styles/SuportePage.css';
 
 function SuportePage() {
     return (

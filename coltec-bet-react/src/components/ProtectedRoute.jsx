@@ -1,11 +1,8 @@
-// Dentro de src/components/ProtectedRoute.jsx
-
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 function ProtectedRoute() {
-  // Pegamos também o estado 'isLoading'
   const { user, isLoading } = useAuth();
 
   // Se ainda estamos verificando o token, mostramos uma mensagem de 'Carregando...'

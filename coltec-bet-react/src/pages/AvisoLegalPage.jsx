@@ -1,5 +1,3 @@
-// Dentro de src/pages/AvisoLegalPage.jsx
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/AvisoLegalPage.css'; // Estilo específico para esta página
@@ -21,8 +19,6 @@ function AvisoLegalPage() {
                     👉 Aposta esportiva não é investimento: entenda o porquê.
                     </a>
                 </p>
-
-                {/* Adicione mais parágrafos ou seções conforme necessário */}
 
             </div>
 

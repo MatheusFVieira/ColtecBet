@@ -1,5 +1,3 @@
-// Caminho: src/pages/LoginPage.jsx
-
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
@@ -21,7 +19,6 @@ function LoginPage() {
     setMessage('');
     
     try {
-      // <-- MUDANÇA AQUI: Usamos 'api.post' e a URL relativa
       const response = await api.post('/api/usuarios/login', { email, senha });
       login(response.data.token);
       navigate('/apostas'); 
@@ -37,7 +34,6 @@ function LoginPage() {
         <div className="login-box">
             <h2>Login na Coltec.BET</h2>
             <form onSubmit={handleSubmit}>
-                 {/* O JSX do formulário continua o mesmo */}
                  <div className="input-box">
                     <label htmlFor="email">Email</label>
                     <input type="email" id="email" name="email" placeholder="Digite seu email" value={email} onChange={(e) => setEmail(e.target.value)} required />
