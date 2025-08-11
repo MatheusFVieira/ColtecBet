@@ -122,11 +122,10 @@
 
     .odds-container {
         flex-direction: column;
-        border: solid 1px black;
-        gap: 10px; 
     }
     
     .odds-container button {
         width: 100%;
+        margin-top: 10px;
     }
 }
