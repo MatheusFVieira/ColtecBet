@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import api from '../api/axiosConfig';
-import '../styles/pages/AdminPage.css';
+import '../styles/AdminPage.css';
 
 function AdminPage() {
   const [partidas, setPartidas] = useState([]);
