@@ -49,3 +49,31 @@
 .odds-container button:hover {
     background-color: rgba(0, 55, 100, 1);
 }
+
+@media (max-width: 768px) {
+    .apostas-container {
+        padding: 10px;
+    }
+
+    .apostas-container h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .partida-card {
+        padding: 15px;
+    }
+
+    .partida-header h3 {
+        font-size: 1.2em;
+    }
+
+    .odds-container {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .odds-container button {
+        width: 100%;
+    }
+}

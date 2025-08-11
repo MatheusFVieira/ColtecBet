@@ -58,7 +58,7 @@
 
 .admin-actions-header {
     display: flex;
-    justify-content: space-between; /* Alinha o título à esquerda e o botão à direita */
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
     padding-bottom: 10px;
@@ -72,7 +72,7 @@
 }
 
 .add-partida-btn {
-    background-color: #28a745; /* Um verde para a ação de 'adicionar' */
+    background-color: #28a745;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -84,10 +84,9 @@
 }
 
 .add-partida-btn:hover {
-    background-color: #218838; /* Um verde mais escuro ao passar o mouse */
+    background-color: #218838;
 }
 
-/* Estilos para o formulário dentro do modal para deixá-lo mais bonito */
 .modal-content form {
     display: flex;
     flex-direction: column;
@@ -101,4 +100,32 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     font-family: 'Andale Mono', monospace;
+}
+
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 10px;
+    }
+
+    .admin-actions-header {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .partida-admin-card {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .partida-admin-info {
+        text-align: center;
+    }
+
+    .partida-admin-actions {
+        display: flex;
+        flex-wrap: wrap; 
+        justify-content: center;
+    }
 }
