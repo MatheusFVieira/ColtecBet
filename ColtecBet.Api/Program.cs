@@ -11,66 +11,47 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- Configuração dos Serviços ---
+// --- CÓDIGO DE DIAGNÓSTICO (PODE SER REMOVIDO DEPOIS) ---
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+Console.WriteLine("--- DIAGNÓSTICO DE CONEXÃO ---");
+Console.WriteLine($"Connection String lida do ambiente: '{connectionString}'");
+Console.WriteLine($"A Connection String é nula ou vazia? {string.IsNullOrEmpty(connectionString)}");
+Console.WriteLine("--- FIM DO DIAGNÓSTICO ---");
 
-// 1. CORS (Cross-Origin Resource Sharing) - VERSÃO FINAL E ROBUSTA
+// --- Configuração dos Serviços ---
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy  =>
-                      {
-                          policy.WithOrigins("http://localhost:5173", "https://coltec-bet.vercel.app") 
-                                .AllowAnyHeader() // Permite qualquer cabeçalho
-                                .AllowAnyMethod(); // Permite qualquer método (GET, POST, etc.)
-                      });
+    options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
+    {
+        policy.WithOrigins("http://localhost:5173", "https://coltec-bet.vercel.app") 
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
 
-// 2. Autenticação, HttpClient, etc...
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options => { /* ... sua configuração JWT ... */ });
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+            
+            // --- ADICIONE ESTA LINHA ---
+            // Tolera uma diferença de até 5 minutos nos relógios entre o gerador e o validador do token.
+            ClockSkew = TimeSpan.FromMinutes(5)
+        };
+    });
+
+// ... O resto do seu Program.cs continua igual ...
 builder.Services.AddHttpClient();
-
-// 3. Controllers com configuração para camelCase
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
-});
-
-// 4. Conexão com o Banco de Dados PostgreSQL
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
+builder.Services.AddControllers().AddJsonOptions(o => o.JsonSerializerOptions.PropertyNamingPolicy = null); // Ajuste para PascalCase
+builder.Services.AddDbContext<ApplicationDbContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
-// 5. Swagger
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => { /* ... sua configuração Swagger ... */ });
-
-// --- Construção da Aplicação ---
-var app = builder.Build();
-
-// Migração Automática...
-using (var scope = app.Services.CreateScope())
-{
-    // ... seu código de migração ...
-}
-
-// --- Configuração do Pipeline de Requisições HTTP ---
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-// app.UseHttpsRedirection(); // Mantenha comentado
-
-// A ordem é importante! UseCors() deve vir antes de UseAuthentication/UseAuthorization
-app.UseCors(MyAllowSpecificOrigins);
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-// --- Execução da Aplicação ---
-app.Run();
+// ...
