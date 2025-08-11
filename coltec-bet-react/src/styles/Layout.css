@@ -53,39 +53,16 @@ footer {
     margin-top: auto;
 }
 
-footer p {
-    text-align: center;
-    flex: 1;
-}
-
-.footer-partner {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex: 1;
-    justify-content: flex-end;
-}
-
-.footer-spacer {
-    flex: 1;
-}
-
-.partner-logo {
-    height: 40px;
-}
-
-.partner-text {
-    display: flex;
-    flex-direction: column;
-    font-size: 0.8em;
-    line-height: 1.2;
-}
-
-.footer-center {
+.footer-main-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    flex: 2;
+}
+
+footer p {
+    text-align: center;
 }
 
 .footer-links a, .footer-links span {
@@ -97,6 +74,30 @@ footer p {
 
 .footer-links a:hover {
     text-decoration: underline;
+}
+
+.footer-partner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1; /* Ocupa o espaço da direita */
+    justify-content: flex-end;
+}
+
+/* Div vazio à esquerda */
+.footer-spacer {
+    flex: 1; /* Ocupa o espaço da esquerda */
+}
+
+.partner-logo {
+    height: 40px;
+}
+
+.partner-text {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8em;
+    line-height: 1.2;
 }
 
 .menu-toggle {
