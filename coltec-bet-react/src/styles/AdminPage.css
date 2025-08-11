@@ -103,29 +103,29 @@
 }
 
 @media (max-width: 768px) {
-    .admin-container {
+    .apostas-container {
         padding: 10px;
     }
 
-    .admin-actions-header {
+    .apostas-container h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .partida-card {
+        padding: 15px;
+    }
+
+    .partida-header h3 {
+        font-size: 1.2em;
+    }
+
+    .odds-container {
         flex-direction: column;
-        align-items: center;
-        gap: 15px;
+        gap: 10px; 
     }
-
-    .partida-admin-card {
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .partida-admin-info {
-        text-align: center;
-    }
-
-    .partida-admin-actions {
-        display: flex;
-        flex-wrap: wrap; 
-        justify-content: center;
+    
+    .odds-container button {
+        width: 100%;
     }
 }
