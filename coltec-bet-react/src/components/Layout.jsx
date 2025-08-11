@@ -3,6 +3,8 @@ import { Outlet, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import UserStatus from './UserStatus';
 import '../styles/Layout.css';
+import logoImage from '../assets/logo1.jpg';
+import partnerLogoImage from '../assets/jume.jpg';
 
 function Layout() {
     const { user } = useAuth();
@@ -16,7 +18,7 @@ function Layout() {
         <>
             <header>
                 <div className="logo">
-                    <Link to="/"><img src="..\assets\logo1.jpg" id="logo1" alt="Logo Coltec.BET"/></Link>
+                    <Link to="/"><img src={logoImage} id="logo1" alt="Logo Coltec.BET"/></Link>
                 </div>
 
                 <button className="menu-toggle" onClick={toggleMenu}>
@@ -55,7 +57,7 @@ function Layout() {
                 </div>
 
                 <div className="footer-partner">
-                    <img src="..\assets\jume.jpg" alt="Jumentus Official Partner" className="partner-logo" />
+                    <img src={partnerLogoImage} alt="Jumentus Official Partner" className="partner-logo" />
                     <div className="partner-text">
                         <span>Jumentus</span>
                         <span>Official</span>
