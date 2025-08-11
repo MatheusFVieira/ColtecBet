@@ -86,7 +86,7 @@ Este projeto foi construído com um ecossistema moderno de desenvolvimento web, 
 
 ## 📌 To-Do (Próximos Passos)
 
-- [ ] Adicionar compatibilidade e responsividade completa para dispositivos mobile.
+- [ ] Adicionar uma página para o usuário comprar o saldo do jogo (Sem dinheiro real).
 - [ ] Implementar um sistema de hash de senhas no backend para maior segurança.
 - [ ] Criar uma página de "Histórico de Apostas" para o usuário.
 - [ ] Adicionar testes unitários para a lógica de negócio da API.
