@@ -16,7 +16,7 @@ function Layout() {
         <>
             <header>
                 <div className="logo">
-                    <Link to="/"><img src="../assets/logo1.jpg" id="logo1" alt="Logo Coltec.BET"/></Link>
+                    <Link to="/"><img src="..\assets\logo1.jpg" id="logo1" alt="Logo Coltec.BET"/></Link>
                 </div>
 
                 <button className="menu-toggle" onClick={toggleMenu}>
@@ -55,7 +55,7 @@ function Layout() {
                 </div>
 
                 <div className="footer-partner">
-                    <img src="../assets/jume.jpg" alt="Jumentus Official Partner" className="partner-logo" />
+                    <img src="..\assets\jume.jpg" alt="Jumentus Official Partner" className="partner-logo" />
                     <div className="partner-text">
                         <span>Jumentus</span>
                         <span>Official</span>
