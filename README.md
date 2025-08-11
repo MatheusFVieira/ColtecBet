@@ -20,9 +20,9 @@ O projeto foi estruturado para abranger o ciclo de vida completo de uma aposta, 
 
 * **Processamento de Resultados:** O administrador pode encerrar uma partida e declarar o resultado final. Automaticamente, o sistema processa todas as apostas associadas àquela partida, calcula os ganhos para os vencedores com base nas odds, atualiza o saldo de cada usuário e marca o status da aposta como "GANHOU" ou "PERDEU".
 
-### Integração com API Externa (Prova de Conceito)
+### Integração com API Externa
 
-Durante o desenvolvimento, o projeto foi projetado e adaptado para consumir dados de uma API de esportes real, demonstrando a capacidade de integração com serviços de terceiros. A aplicação conseguiu se conectar, autenticar e buscar com sucesso dados de partidas de ligas profissionais.
+Durante o desenvolvimento, o projeto foi projetado e adaptado para consumir dados de uma API de esportes real a [API Football](https://www.api-football.com/), demonstrando a capacidade de integração com serviços de terceiros. A aplicação conseguiu se conectar, autenticar e buscar com sucesso dados de partidas de ligas profissionais.
 
 No entanto, optamos por não manter essa integração na versão final devido às limitações dos planos gratuitos das APIs disponíveis. Essas restrições, como o acesso limitado a dados de temporadas futuras ou a funcionalidades de consulta específicas (essenciais para um sistema de apostas em tempo real), impediam a implementação completa da lógica de negócio. A solução adotada foi utilizar o banco de dados interno (PostgreSQL), o que garante controle total sobre os dados e permite a demonstração completa de todas as funcionalidades do sistema, desde a criação da partida até o pagamento das apostas.
 
