@@ -7,7 +7,7 @@
 .saldo-display {
     font-size: 16px;
     font-weight: bold;
-    color: white; /* O fundo agora é sempre o header azul */
+    color: white;
 }
 
 .logout-btn-header {
