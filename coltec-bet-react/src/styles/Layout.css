@@ -153,3 +153,26 @@ footer p {
         padding: 10px;
     }
 }
+
+@media (max-width: 768px) {
+    footer {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 10px;
+    }
+
+    .footer-main-content {
+        order: 1; 
+        text-align: center;
+    }
+
+    .footer-partner {
+        order: 2;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .footer-spacer {
+        display: none;
+    }
+}
