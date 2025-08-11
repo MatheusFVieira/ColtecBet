@@ -18,3 +18,90 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+.modal-backdrop {
+    position: fixed; /* Fica fixo na tela, mesmo com scroll */
+    top: 0;
+    left: 0;
+    width: 100vw; /* 100% da largura da tela */
+    height: 100vh; /* 100% da altura da tela */
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro semi-transparente */
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+    z-index: 1000; /* Garante que o modal fique na frente de tudo */
+}
+
+/* A caixa branca do formulário */
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px; /* Largura máxima para não ficar muito grande em desktops */
+    color: rgba(0, 75, 133, 1); /* Garante que o texto dentro seja azul */
+}
+
+.modal-content h3 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.modal-content p {
+    margin-bottom: 10px;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-content form label {
+    font-weight: bold;
+}
+
+.modal-content form input {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'Andale Mono', monospace;
+}
+
+.modal-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between; /* Coloca os botões nas extremidades */
+    gap: 10px;
+}
+
+.modal-actions button {
+    flex-grow: 1; /* Faz os botões ocuparem o mesmo espaço */
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1em;
+    font-family: 'Andale Mono', monospace;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.modal-actions button[type="submit"] {
+    background-color: rgba(0, 75, 133, 1);
+    color: white;
+}
+.modal-actions button[type="submit"]:hover {
+    background-color: rgba(0, 60, 110, 1);
+}
+
+.modal-actions button[type="button"] {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+}
+.modal-actions button[type="button"]:hover {
+    background-color: #e0e0e0;
+}

@@ -70,6 +70,7 @@
 
     .odds-container {
         flex-direction: column;
+        margin-top: 3px;
         gap: 8px;
     }
     
