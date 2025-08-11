@@ -34,7 +34,7 @@ No entanto, optamos por não manter essa integração na versão final devido à
 > 
 > **Não incentivamos, de forma alguma, a prática de apostas reais.** Elas podem causar **vício, prejuízos financeiros** e impactar negativamente a vida das pessoas. **Reforçamos que plataformas reais de apostas são exclusivas para maiores de 18 anos🔞** e devem ser utilizadas com extrema responsabilidade, se for o caso.
 > 
-> 👉 [Aposta esportiva não é investimento: entenda o porquê](ttps://investalk.bb.com.br/noticias/quero-aprender/aposta-esportiva-nao-e-investimento-entenda-por-que).
+👉 [Aposta esportiva não é investimento: entenda o porquê](https://investalk.bb.com.br/noticias/quero-aprender/aposta-esportiva-nao-e-investimento-entenda-por-que).
 
 ---
 
