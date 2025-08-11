@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/axiosConfig';
 import { useAuth } from '../context/AuthContext';
-import '../styles/apostasPage.css';
+import '../styles/ApostasPage.css'; // <-- IMPORTAÇÃO DO NOVO CSS
 
 function ApostasPage() {
   const [partidas, setPartidas] = useState([]);
@@ -56,6 +56,7 @@ function ApostasPage() {
         setIsModalOpen(false);
         setBetValue('');
         setSelectedBet(null);
+        fetchPartidas(); // Atualiza a lista de partidas, caso alguma tenha sido encerrada
       }, 1500);
     } catch (error) {
       setBetMessage(error.response?.data?.message || error.response?.data || 'Erro ao realizar a aposta.');
@@ -66,18 +67,19 @@ function ApostasPage() {
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
   return (
-    <div>
+    <div className="apostas-container">
       <h2>Partidas Disponíveis</h2>
       {partidas.length === 0 ? (
         <p>Nenhuma partida disponível no momento.</p>
       ) : (
         partidas.map((partida) => (
-          // --- GARANTINDO QUE OS NOMES ESTÃO CORRETOS (camelCase) ---
-          <div key={partida.id} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px' }}>
-            <h3 style={{textAlign: 'center'}}>{partida.timeCasa} vs {partida.timeVisitante}</h3>
-            <p style={{textAlign: 'center'}}>Data: {new Date(partida.dataPartida).toLocaleString('pt-BR')}</p>
-            <div style={{textAlign: 'center'}}>
-              <strong>Odds:</strong>
+          // Aplicando as novas classes de CSS para o card
+          <div key={partida.id} className="partida-card">
+            <div className="partida-header">
+              <h3>{partida.timeCasa} vs {partida.timeVisitante}</h3>
+            </div>
+            <p className="partida-info">Data: {new Date(partida.dataPartida).toLocaleString('pt-BR')}</p>
+            <div className="odds-container">
               <button onClick={() => handleBetClick(partida, 'CASA', partida.oddCasa)}>Casa: {partida.oddCasa}</button>
               <button onClick={() => handleBetClick(partida, 'EMPATE', partida.oddEmpate)}>Empate: {partida.oddEmpate}</button>
               <button onClick={() => handleBetClick(partida, 'VISITANTE', partida.oddVisitante)}>Visitante: {partida.oddVisitante}</button>
@@ -86,7 +88,7 @@ function ApostasPage() {
         ))
       )}
 
-      {/* O MODAL DE APOSTA */}
+      {/* O MODAL DE APOSTA (sem alterações) */}
       {isModalOpen && selectedBet && (
         <div className="modal-backdrop">
           <div className="modal-content">
