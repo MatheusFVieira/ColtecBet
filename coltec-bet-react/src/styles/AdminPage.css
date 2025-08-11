@@ -1,0 +1,57 @@
+/* Caminho: src/styles/pages/AdminPage.css */
+
+.admin-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.admin-container h2 {
+    text-align: center;
+    color: rgba(0, 75, 133, 1);
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+.admin-message {
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #e0f7fa;
+    color: #006064;
+}
+
+.partida-admin-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.partida-admin-info {
+    font-size: 1.1em;
+}
+
+.partida-admin-actions button {
+    background-color: #f0f4f8;
+    color: rgba(0, 75, 133, 1);
+    border: 1px solid #cddde8;
+    padding: 8px 12px;
+    margin-left: 10px;
+    border-radius: 5px;
+    font-family: 'Andale Mono', monospace;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.partida-admin-actions button:hover {
+    background-color: rgba(0, 75, 133, 1);
+    color: white;
+}
