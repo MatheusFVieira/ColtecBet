@@ -4,17 +4,21 @@ import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-// Este componente é o nosso "segurança"
 function ProtectedRoute() {
-  const { user } = useAuth(); // Usamos nosso hook para ver se há um usuário logado
+  // Pegamos também o estado 'isLoading'
+  const { user, isLoading } = useAuth();
 
-  // Se NÃO houver usuário, redirecionamos para a página de login
+  // Se ainda estamos verificando o token, mostramos uma mensagem de 'Carregando...'
+  if (isLoading) {
+    return <div>Carregando...</div>;
+  }
+
+  // Só depois de terminar de carregar, verificamos se há um usuário
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  // Se houver um usuário, renderizamos o conteúdo da rota filha
-  // O <Outlet /> é um placeholder para onde o componente da página protegida (ex: HomePage) será inserido
+  // Se terminou de carregar e há um usuário, mostra a página
   return <Outlet />;
 }
 

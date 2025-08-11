@@ -1,4 +1,4 @@
-// Caminho: ColtecBet.Api/Program.cs
+// Caminho: ColtecBet.Api/Program.cs (Versão final para produção)
 
 using ColtecBet.Api.Data;
 using Microsoft.EntityFrameworkCore;
@@ -6,27 +6,23 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using System.Text.Json;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- CÓDIGO DE DIAGNÓSTICO (PODE SER REMOVIDO DEPOIS) ---
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-Console.WriteLine("--- DIAGNÓSTICO DE CONEXÃO ---");
-Console.WriteLine($"Connection String lida do ambiente: '{connectionString}'");
-Console.WriteLine($"A Connection String é nula ou vazia? {string.IsNullOrEmpty(connectionString)}");
-Console.WriteLine("--- FIM DO DIAGNÓSTICO ---");
-
 // --- Configuração dos Serviços ---
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
-    {
-        policy.WithOrigins("http://localhost:5173", "https://coltec-bet.vercel.app") 
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy  =>
+                      {
+                          policy.WithOrigins("http://localhost:5173", "https://coltec-bet.vercel.app") 
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
 });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -41,17 +37,71 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
-            
-            // --- ADICIONE ESTA LINHA ---
-            // Tolera uma diferença de até 5 minutos nos relógios entre o gerador e o validador do token.
             ClockSkew = TimeSpan.FromMinutes(5)
         };
     });
 
-// ... O resto do seu Program.cs continua igual ...
 builder.Services.AddHttpClient();
-builder.Services.AddControllers().AddJsonOptions(o => o.JsonSerializerOptions.PropertyNamingPolicy = null); // Ajuste para PascalCase
-builder.Services.AddDbContext<ApplicationDbContext>(options => {
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    // Garante que o frontend receba os dados em camelCase, o padrão do JavaScript
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+});
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-// ...
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Insira 'Bearer' [espaço] e então o seu token no campo abaixo.\r\n\r\nExemplo: \"Bearer 12345abcdef\""
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
+
+
+// --- Construção da Aplicação ---
+var app = builder.Build();
+
+
+// --- Configuração do Pipeline de Requisições HTTP ---
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+// A linha UseHttpsRedirection foi removida para compatibilidade com o Render
+app.UseCors(MyAllowSpecificOrigins);
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+
+// --- Execução da Aplicação ---
+app.Run();

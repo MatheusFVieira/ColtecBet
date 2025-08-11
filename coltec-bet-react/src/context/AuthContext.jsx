@@ -1,4 +1,4 @@
-// Caminho: src/context/AuthContext.jsx
+// Dentro de src/context/AuthContext.jsx
 
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
@@ -9,48 +9,40 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  // --- NOVA LINHA AQUI ---
+  const [isLoading, setIsLoading] = useState(true); // Começa como 'true'
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('authToken');
-    if (storedToken) {
-      const decodedUser = jwtDecode(storedToken);
-      setUser(decodedUser);
-      setToken(storedToken);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+    try {
+      const storedToken = localStorage.getItem('authToken');
+      if (storedToken) {
+        const decodedUser = jwtDecode(storedToken);
+        setUser(decodedUser);
+        setToken(storedToken);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+      }
+    } catch (error) {
+      // Se o token for inválido, limpa tudo
+      localStorage.removeItem('authToken');
+      console.error("Erro ao decodificar o token", error);
+    } finally {
+      // --- NOVA LINHA AQUI ---
+      // Diz à aplicação que já terminamos de verificar, independentemente do resultado
+      setIsLoading(false);
     }
   }, []);
 
-  const login = (newToken) => {
-    localStorage.setItem('authToken', newToken);
-    const decodedUser = jwtDecode(newToken);
-    setUser(decodedUser);
-    setToken(newToken);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-  };
-
-  const logout = () => {
-    localStorage.removeItem('authToken');
-    setUser(null);
-    setToken(null);
-    delete axios.defaults.headers.common['Authorization'];
-  };
-
-  // Nova função para atualizar o saldo no estado global
-  const updateBalance = (newBalance) => {
-    if (user) {
-      setUser(currentUser => ({
-        ...currentUser, // Mantém todas as outras informações do usuário
-        saldo: newBalance // Atualiza apenas o saldo
-      }));
-    }
-  };
+  const login = (newToken) => { /* ... continua igual ... */ };
+  const logout = () => { /* ... continua igual ... */ };
+  const updateBalance = (newBalance) => { /* ... continua igual ... */ };
 
   const value = {
     user,
     token,
+    isLoading, // <-- Exporta o novo estado
     login,
     logout,
-    updateBalance // Exporta a nova função para ser usada por outros componentes
+    updateBalance,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
