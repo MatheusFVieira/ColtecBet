@@ -1,16 +1,17 @@
-// Dentro de src/context/AuthContext.jsx
+// Caminho: src/context/AuthContext.jsx
 
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import api from '../api/axiosConfig'; // Usando nossa instância centralizada do axios
 
+// 1. Criamos o Context
 const AuthContext = createContext();
 
+// 2. Criamos o Provedor do Contexto
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
-  // --- NOVA LINHA AQUI ---
-  const [isLoading, setIsLoading] = useState(true); // Começa como 'true'
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     try {
@@ -19,27 +20,51 @@ export function AuthProvider({ children }) {
         const decodedUser = jwtDecode(storedToken);
         setUser(decodedUser);
         setToken(storedToken);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+        // Não precisamos mais do axios.defaults aqui, pois o axiosConfig.js já cuida disso
       }
     } catch (error) {
-      // Se o token for inválido, limpa tudo
       localStorage.removeItem('authToken');
-      console.error("Erro ao decodificar o token", error);
+      console.error("Erro ao decodificar o token, limpando...", error);
     } finally {
-      // --- NOVA LINHA AQUI ---
-      // Diz à aplicação que já terminamos de verificar, independentemente do resultado
       setIsLoading(false);
     }
   }, []);
 
-  const login = (newToken) => { /* ... continua igual ... */ };
-  const logout = () => { /* ... continua igual ... */ };
-  const updateBalance = (newBalance) => { /* ... continua igual ... */ };
+  // --- FUNÇÃO LOGIN COMPLETA ---
+  const login = (newToken) => {
+    localStorage.setItem('authToken', newToken);
+    const decodedUser = jwtDecode(newToken);
+    setUser(decodedUser);
+    setToken(newToken);
+    // Configura o cabeçalho para a sessão atual
+    api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+  };
+
+  // --- FUNÇÃO LOGOUT COMPLETA ---
+  const logout = () => {
+    localStorage.removeItem('authToken');
+    setUser(null);
+    setToken(null);
+    // Remove o cabeçalho de autorização da nossa instância do axios
+    delete api.defaults.headers.common['Authorization'];
+  };
+
+  // --- FUNÇÃO UPDATEBALANCE COMPLETA ---
+  const updateBalance = (newBalance) => {
+    setUser(currentUser => {
+      if (!currentUser) return null;
+      // Cria um novo objeto de usuário com o saldo atualizado
+      const updatedUser = { ...currentUser, saldo: newBalance };
+      
+      // Embora não atualizemos o token em si, para a sessão atual, o estado está correto.
+      return updatedUser;
+    });
+  };
 
   const value = {
     user,
     token,
-    isLoading, // <-- Exporta o novo estado
+    isLoading,
     login,
     logout,
     updateBalance,
@@ -48,6 +73,7 @@ export function AuthProvider({ children }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
+// 3. Hook customizado
 export function useAuth() {
   return useContext(AuthContext);
 }
