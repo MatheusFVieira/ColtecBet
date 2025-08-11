@@ -50,8 +50,8 @@ function Layout() {
                     {/* --- PASSO 2: USAMOS A VARIÁVEL IMPORTADA NO 'src' --- */}
                     <img src={partnerLogoImage} alt="Jumentus Oficial Partner" className="partner-logo" />
                     <div className="partner-text">
-                        <span>Jumetos</span>
-                        <span>Oficial</span>
+                        <span>Jumentus</span>
+                        <span>Official</span>
                         <span>Partner</span>
                     </div>
                 </div>
