@@ -33,6 +33,8 @@ No entanto, optamos por não manter essa integração na versão final devido à
 > Além disso, deixamos claro que **não temos qualquer vínculo com o Colégio Técnico da UFMG (COLTEC).** O nome do projeto é uma **homenagem bem-humorada** à instituição onde estudamos. Somos ex-alunos, e o desenvolvimento deste jogo foi possível graças aos conhecimentos adquiridos durante o curso técnico. Trata-se de um tributo feito com carinho e respeito, **sem fins comerciais nem associação institucional.**
 > 
 > **Não incentivamos, de forma alguma, a prática de apostas reais.** Elas podem causar **vício, prejuízos financeiros** e impactar negativamente a vida das pessoas. **Reforçamos que plataformas reais de apostas são exclusivas para maiores de 18 anos🔞** e devem ser utilizadas com extrema responsabilidade, se for o caso.
+> 
+> 👉 [Aposta esportiva não é investimento: entenda o porquê](ttps://investalk.bb.com.br/noticias/quero-aprender/aposta-esportiva-nao-e-investimento-entenda-por-que).
 
 ---
 
