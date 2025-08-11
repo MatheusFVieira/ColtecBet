@@ -62,6 +62,7 @@ Este projeto foi construído com um ecossistema moderno de desenvolvimento web, 
 ## 👨‍💻 Desenvolvedor
 
 * [Matheus Freitas](https://github.com/MatheusFVieira)
+* [Pedro Henrique](https://github.com/DevWannabe-dot)
 
 ---
 
